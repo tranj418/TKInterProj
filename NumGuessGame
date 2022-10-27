@@ -1,0 +1,76 @@
+from tkinter import *
+import random
+
+
+
+#functions
+def submit():
+    num1 = entry1.get()
+    label2.configure(text=f'Pick a number between 1 and {num1}')
+    entry1.config(state=DISABLED)
+
+    guess = int(entry2.get())
+    num2 = random.randint(0, int(entry2.get))
+    while guess != num2:
+        if guess > num2:
+            output.insert(0, 'Guess is too high!')
+        elif guess < num2:
+            output.insert(0, 'Guess is too low!')
+        else:
+            output.insert(0, f'{guess} is the correct answer!')
+
+def clear():
+    entry1.delete(0, END)
+
+
+#Setup options
+root = Tk()
+root.title('Num Guess Game')
+root.geometry('1000x500')
+root.config(bg='#0243a6')
+
+#objects/widgets
+label = Label(root, 
+            text='Number Guessing Game',
+            font=('Calibri', 32),
+            bg='black',
+            fg='white')
+
+label2 = Label(root, 
+            text='Enter in number above',
+            font=('Calibri', 32),
+            bg='black',
+            fg='white')
+
+entry1 = Entry(root, 
+                font=('Calibri', 32)
+                )
+#entry1.insert(0, 'Enter in a number: ') #This was messing with the label2.config line 9
+
+entry2 = Entry(root, 
+                font=('Calibri', 32)                )
+entry2.insert(0, 'Enter guess here: ')
+
+output = Text(root,
+            font=('Calibri', 32),
+            height=10)
+
+
+submit = Button(root, 
+                text='Submit',
+                font=('Calibri', 32),
+                command=submit)
+
+clear = Button(root,
+                text='Clear',
+                font=('Calibri', 32),
+                command=clear)
+
+label.pack()
+entry1.pack()
+label2.pack()
+entry2.pack()
+submit.pack(side='left')
+clear.pack(side='right')
+output.pack(side='bottom')
+root.mainloop()
