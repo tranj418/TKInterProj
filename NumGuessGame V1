@@ -1,7 +1,9 @@
 from tkinter import *
 import random
 
-
+####
+#Need to remove the .pack method and begin using more of the .grid method for Version 2
+####
 
 #functions
 def submit():
