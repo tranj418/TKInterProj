@@ -1,16 +1,16 @@
 from tkinter import *
 from tkinter.font import BOLD
+import random
 
 root = Tk()
 root.title('Number Guess Game V2')
 root.geometry('700x700')
 root.config(bg='#0243a6')
 
-#Initializing any variables
-numVar = IntVar()
 
 #Section for functions
 def showNumber():
+    guess = 0
     num1 = int(entry1.get())#To avoid a valueTypeError do NOT use the .insert with the .get, it will complain about a string.
     label1 = Label(root, 
             font=('GUMDROP', 25, BOLD),
@@ -22,10 +22,9 @@ def showNumber():
     entry2 = Entry(root, 
             font=('ARIAL', 15, BOLD),
             bg='white')
-    entry2.grid()
-    text = Text(root,
-                font=('ARIAL', 15, BOLD),
-                bg='gold').grid(row=4, column=0)
+    entry2.grid(row=4, column=0)
+
+ 
 
 def deleteEntry():
     entry1.delete(0, END)
