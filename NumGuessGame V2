@@ -11,28 +11,41 @@ numVar = IntVar()
 
 #Section for functions
 def showNumber():
-    pass
+    num1 = int(entry1.get())#To avoid a valueTypeError do NOT use the .insert with the .get, it will complain about a string.
     label1 = Label(root, 
             font=('GUMDROP', 25, BOLD),
-            bg='gold').grid(row=3, column=0, columnspan=3)
+            bg='gold',
+            width=30)
+    label1.grid(row=3, column=0, columnspan=3)
+    label1.config(text=f'Enter a number between 1 and {num1}\n Enter guess below.')
+    entry1.destroy()
+    entry2 = Entry(root, 
+            font=('ARIAL', 15, BOLD),
+            bg='white')
+    entry2.grid()
+    text = Text(root,
+                font=('ARIAL', 15, BOLD),
+                bg='gold').grid(row=4, column=0)
 
 def deleteEntry():
-    entry1.delete(18, END)
+    entry1.delete(0, END)
 
 
 #Area for widgets
 title = Label(root, 
-            text='Enter a number -->', 
+            text='Number Guessing Game!', 
             font=('ARIAL', 15, BOLD),
             bg='gold').grid(row=0, column=0)
 
 entry1 = Entry(root, 
             font=('ARIAL', 15, BOLD),
-            bg='white',
-            Variable = numVar)
-entry1.insert(0, 'Enter number here: ')
-entry1.grid(row=0, column=1) # Cannot add .grid to the end of line 26, will return a AttributeError, the .insert and .grid must be used separately
+            bg='white')
+#entry1.insert(0, 'Enter number here: ')
+entry1.grid(row=0, column=1)
+#Cannot add .grid to the end of line 26, will return a AttributeError, the .insert and .grid must be used separately
 #Use a try and catch exception for this error in the future.
+
+
 
 submit = Button(root, 
                 text='Submit',
