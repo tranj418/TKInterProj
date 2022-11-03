@@ -37,6 +37,7 @@ root.title('Number Guess Game V2')
 root.geometry('700x700')
 root.config(bg='#0243a6')
 e = root.bind('<Escape>', close_window)
+enter = root.bind('<Return>', getNumber) #Will most likely need to duplicate or make a new function for the argument key
 
 
 #Area for widgets
