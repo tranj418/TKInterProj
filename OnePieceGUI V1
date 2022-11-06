@@ -1,0 +1,75 @@
+from tkinter import *
+from tkinter.font import BOLD
+import mysql.connector
+
+
+##########################
+# Databse connection setup
+##########################
+mydb=mysql.connector.connect(
+    host= "127.0.0.1",
+    user= "root",
+    password= "2193ECAstle!!",
+    database="one_piece",
+    autocommit=True)
+mycursor= mydb.cursor()
+
+#mycursor.execute('select * from characters') #To be utilized in the submit function for testing
+
+
+##########################
+#Area for function setup
+##########################
+
+def submit():
+    #Test to insert data into the MySQL table
+    pass
+
+def clear():
+    firstName_Entry.delete(0, END) #If utilizing a method with entry widgets, make sure the .grid is SEPARATE from the main entry widget setup
+    lastName_Entry.delete(0, END)
+    haki_entry.delete(0, END)
+
+#######General Tk setup#######
+root = Tk()
+root.geometry('650x500')
+
+
+###############################
+#Area for widgets
+###############################
+
+label = Label(root, 
+            text='One Piece Homepage',
+            font=('Calibri', 15, BOLD),
+            bg='#0596f0',
+            width=30,
+            height=3).grid(row=0, column=2)
+
+first_name = Label(root,
+            text='First Name').grid(row=2, column=0)
+firstName_Entry = Entry(root)
+firstName_Entry.grid(row=2, column=1)
+
+
+last_name = Label(root, 
+            text='Last Name').grid(row=3, column=0)
+lastName_Entry = Entry(root)
+lastName_Entry.grid(row=3, column=1)
+
+haki_type = Label(root, 
+            text='Haki Type').grid(row=4, column=0)
+haki_entry = Entry(root)
+haki_entry.grid(row=4, column=1)
+
+submit = Button(root, 
+                text='Submit',
+                command=submit).grid(row=5, column=0)
+
+clear = Button(root, 
+                text='Clear',
+                command=clear).grid(row=5, column=1)
+
+
+
+root.mainloop()
