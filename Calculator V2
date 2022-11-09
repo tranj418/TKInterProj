@@ -3,11 +3,32 @@ from tkinter import *
 #######################
 #Section for functions
 #######################
-def numButton():
-    pass
+def numButton(num):
+    global equation_txt
+    equation_txt = equation_txt + str(num) #Takes the argument given and converts to string
+    equation_label.set(equation_txt)
 
 def clear():
-    pass
+    global equation_txt
+    equation_label.set('')
+    equation_txt = ''
+
+def equals():
+    global equation_txt
+
+    try:
+        total = str(eval(equation_txt))
+
+        equation_label.set(total)
+
+        equation_txt = total
+    except ZeroDivisionError:
+        equation_label.set('Arithmetic Error')
+        equation_txt = ''
+    except SyntaxError:
+        equation_label.set('Invalid operation usage')
+        equation_txt = ''
+
 
 
 #########################
@@ -16,8 +37,12 @@ def clear():
 
 root = Tk()
 root.title('JT Calculator')
-root.geometry('480x300') #
+#root.geometry('480x300') 
 root.config(bg='#0d0908')
+
+equation_txt = ''
+equation_label = StringVar()
+
 
 
 
@@ -28,7 +53,8 @@ root.config(bg='#0d0908')
 displayLabel = Label(root,
                     bg='silver',
                     width=55,
-                    height=3)
+                    height=3,
+                    textvariable=equation_label) #The text variable must be set on the label so that the numbers selected display in the label
 displayLabel.pack()
 
 numFrame = Frame(root)
@@ -45,7 +71,8 @@ num1 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(1))
 num1.grid(row=0, column=0)
 
 num2 = Button(numFrame, 
@@ -54,7 +81,8 @@ num2 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(2))
 num2.grid(row=0, column=1)
 
 num3 = Button(numFrame, 
@@ -63,7 +91,8 @@ num3 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(3))
 num3.grid(row=0, column=2)
 
 num4 = Button(numFrame, 
@@ -72,7 +101,8 @@ num4 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(4))
 num4.grid(row=1, column=0)
 
 num5 = Button(numFrame, 
@@ -81,7 +111,8 @@ num5 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(5))
 num5.grid(row=1, column=1)
 
 num6 = Button(numFrame, 
@@ -90,7 +121,8 @@ num6 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(6))
 num6.grid(row=1, column=2)
 
 num7 = Button(numFrame, 
@@ -99,7 +131,8 @@ num7 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(7))
 num7.grid(row=2, column=0)
 
 num8 = Button(numFrame, 
@@ -108,7 +141,8 @@ num8 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(8))
 num8.grid(row=2, column=1)
 
 num9 = Button(numFrame, 
@@ -117,7 +151,8 @@ num9 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(9))
 num9.grid(row=2, column=2)
 
 num0 = Button(numFrame, 
@@ -126,7 +161,8 @@ num0 = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton(0))
 num0.grid(row=3, column=0)
 
 equals = Button(numFrame, 
@@ -135,7 +171,8 @@ equals = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=equals)
 equals.grid(row=3, column=1)
 
 clearBtn = Button(numFrame, 
@@ -145,7 +182,8 @@ clearBtn = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=clear)
 clearBtn.grid(row=3, column=2)
 
 plus = Button(numFrame, 
@@ -154,7 +192,8 @@ plus = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton('+'))
 plus.grid(row=0, column=3)
 
 subtract = Button(numFrame, 
@@ -163,7 +202,8 @@ subtract = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton('-'))
 subtract.grid(row=1, column=3)
 
 multiply = Button(numFrame, 
@@ -172,7 +212,8 @@ multiply = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton('*'))
 multiply.grid(row=2, column=3)
 
 divide = Button(numFrame, 
@@ -181,9 +222,19 @@ divide = Button(numFrame,
             activebackground='gold',
             relief=RAISED,
             width=11,
-            height=3)
+            height=3,
+            command=lambda: numButton('/'))
 divide.grid(row=3, column=3)
 
+decimal = Button(numFrame, 
+            text='.', 
+            bg='gold',
+            activebackground='gold',
+            relief=RAISED,
+            width=11,
+            height=3,
+            command=lambda: numButton('.'))
+decimal.grid(row=4, column=0)
 
 
 root.mainloop()
