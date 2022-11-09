@@ -22,13 +22,38 @@ mycursor= mydb.cursor()
 ##########################
 
 def submit():
+    mydb=mysql.connector.connect(
+        host= "127.0.0.1",
+        user= "root",
+        password= "2193ECAstle!!",
+        database="one_piece",
+        autocommit=True)
+    mycursor= mydb.cursor()
+
     #Test to insert data into the MySQL table
-    pass
+    mycursor.execute('insert into haki values(:haki_type)',
+                    {
+                        'haki_type': haki_type_entry.get()
+                    })
 
 def clear():
     firstName_Entry.delete(0, END) #If utilizing a method with entry widgets, make sure the .grid is SEPARATE from the main entry widget setup
     lastName_Entry.delete(0, END)
-    haki_entry.delete(0, END)
+    haki_type_entry.delete(0, END)
+
+def showRecords():
+    mydb=mysql.connector.connect(
+        host= "127.0.0.1",
+        user= "root",
+        password= "2193ECAstle!!",
+        database="one_piece",
+        autocommit=True)
+    mycursor= mydb.cursor()
+
+    mycursor.execute('select * from characters')
+    mycursor.fetchall()
+
+    print(mycursor.fetchall())
 
 #######General Tk setup#######
 root = Tk()
@@ -59,8 +84,8 @@ lastName_Entry.grid(row=3, column=1)
 
 haki_type = Label(root, 
             text='Haki Type').grid(row=4, column=0)
-haki_entry = Entry(root)
-haki_entry.grid(row=4, column=1)
+haki_type_entry = Entry(root)
+haki_type_entry.grid(row=4, column=1)
 
 submit = Button(root, 
                 text='Submit',
@@ -70,6 +95,8 @@ clear = Button(root,
                 text='Clear',
                 command=clear).grid(row=5, column=1)
 
-
+showAll = Button(root, 
+                text='Show All',
+                command=showRecords). grid(row=5, column=2)
 
 root.mainloop()
