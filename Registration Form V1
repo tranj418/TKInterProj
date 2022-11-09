@@ -1,0 +1,86 @@
+from tkinter import *
+from tkinter import messagebox
+
+root = Tk()
+root.title('Jim\'s Project')
+root.geometry('500x500')
+
+def validate():
+    if first_nameEntry.isdigit():
+        return False
+    pass
+
+
+def submit():
+    first_name = first_nameEntry.get()
+    last_name = last_nameEntry.get()
+
+    labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
+
+    print(labelTxt)
+
+
+def clear():
+    first_nameEntry.delete(0, END)
+    last_nameEntry.delete(0, END)
+    emailEntry.delete(0, END)
+
+reg = root.register(validate)
+
+
+regLabel = Label(root, 
+            text='Registration Form - required fields (*)',
+            font=('Calibri', 20))
+regLabel.pack()
+
+frame = Frame(root)
+frame.pack()
+
+
+firstNameLabel = Label(frame, 
+                        text='First Name *',
+                        font=('Calibri', 15),
+                        pady=10)
+firstNameLabel.grid(row=0,column=0)
+
+first_nameEntry = Entry(frame, 
+                    font=('Calibri', 10))
+first_nameEntry.grid(row=1, column=0)
+
+
+lastNameLabel = Label(frame, 
+                        text='Last Name *',
+                        font=('Calibri', 15),
+                        pady=10)
+lastNameLabel.grid(row=2,column=0)
+
+last_nameEntry = Entry(frame, 
+                    font=('Calibri', 10))
+last_nameEntry.grid(row=3, column=0)
+
+
+emailLabel = Label(frame, 
+                        text='Email',
+                        font=('Calibri', 15),
+                        pady=10)
+emailLabel.grid(row=4,column=0)
+
+emailEntry = Entry(frame, 
+                    font=('Calibri', 10))
+emailEntry.grid(row=5, column=0)
+
+
+submitBtn = Button(frame, 
+                text='Submit',
+                command=submit,
+                padx=10)
+submitBtn.grid(row=6 , column=0)
+
+clearBtn = Button(frame, 
+                text='Clear',
+                command=clear,
+                padx=10)
+clearBtn.grid(row=7 , column=0)
+
+
+root.mainloop()
