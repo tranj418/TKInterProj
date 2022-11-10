@@ -5,19 +5,26 @@ root = Tk()
 root.title('Jim\'s Project')
 root.geometry('500x500')
 
-def validate():
-    if first_nameEntry.isdigit():
-        return False
-    pass
+
+# Not sure if these lines of code are needed
+#def validate():
+#    if first_nameEntry.isdigit():
+#        messagebox.showerror(title=None, message='No numbers')
+#        return False
+#reg = root.register(validate) -- Separate line from the function above
+
+        
 
 
 def submit():
     first_name = first_nameEntry.get()
     last_name = last_nameEntry.get()
 
-    labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
-
-    print(labelTxt)
+    if first_name.isdigit() or last_name.isdigit():
+        messagebox.showerror(title='Hold up thereeee', message='No numbers in the first or last name field')
+    else:
+        labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
+        print(labelTxt)
 
 
 def clear():
@@ -25,7 +32,7 @@ def clear():
     last_nameEntry.delete(0, END)
     emailEntry.delete(0, END)
 
-reg = root.register(validate)
+
 
 
 regLabel = Label(root, 
