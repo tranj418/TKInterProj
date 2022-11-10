@@ -25,7 +25,7 @@ def submit():
 
     if first_name.isdigit() or last_name.isdigit():
         messagebox.showerror(title='Hol up son', message='No numbers in the first or last name field')
-        return False
+        #return False -- not sure if it is needed lol
     elif regex.search(first_name) != None or regex.search(last_name) != None:
         messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
     elif first_name == "":
@@ -33,6 +33,8 @@ def submit():
     else:
         labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
         print(labelTxt)
+
+
 
 def enterBtn(event):
     first_name = first_nameEntry.get()
@@ -52,6 +54,8 @@ def clear():
     first_nameEntry.delete(0, END)
     last_nameEntry.delete(0, END)
     emailEntry.delete(0, END)
+
+
 
 
 regLabel = Label(root, 
