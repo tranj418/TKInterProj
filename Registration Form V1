@@ -1,9 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
+import re
 
 root = Tk()
 root.title('Jim\'s Project')
 root.geometry('500x500')
+regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]')
+
 
 
 # Not sure if these lines of code are needed
@@ -21,7 +24,25 @@ def submit():
     last_name = last_nameEntry.get()
 
     if first_name.isdigit() or last_name.isdigit():
-        messagebox.showerror(title='Hold up thereeee', message='No numbers in the first or last name field')
+        messagebox.showerror(title='Hol up son', message='No numbers in the first or last name field')
+        return False
+    elif regex.search(first_name) != None or regex.search(last_name) != None:
+        messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
+    elif first_name == "":
+        messagebox.showerror(title='Hol up son', message='First name is a required field')
+    else:
+        labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
+        print(labelTxt)
+
+def enterBtn(event):
+    first_name = first_nameEntry.get()
+    last_name = last_nameEntry.get()
+
+    if first_name.isdigit() or last_name.isdigit():
+        messagebox.showerror(title='Hol up son', message='No numbers in the first or last name field')
+        return False
+    elif regex.search(first_name) != None or regex.search(last_name) != None:
+        messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
     else:
         labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
         print(labelTxt)
@@ -31,8 +52,6 @@ def clear():
     first_nameEntry.delete(0, END)
     last_nameEntry.delete(0, END)
     emailEntry.delete(0, END)
-
-
 
 
 regLabel = Label(root, 
@@ -82,6 +101,8 @@ submitBtn = Button(frame,
                 command=submit,
                 padx=10)
 submitBtn.grid(row=6 , column=0)
+
+root.bind('<Return>', enterBtn)
 
 clearBtn = Button(frame, 
                 text='Clear',
