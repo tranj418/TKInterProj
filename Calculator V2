@@ -38,7 +38,7 @@ def equals():
 root = Tk()
 root.title('JT Calculator')
 #root.geometry('480x300') 
-root.config(bg='#0d0908')
+#root.config(bg='#0d0908')
 
 equation_txt = ''
 equation_label = StringVar()
@@ -51,7 +51,6 @@ equation_label = StringVar()
 ###########################
 
 displayLabel = Label(root,
-                    bg='silver',
                     width=55,
                     height=3,
                     textvariable=equation_label) #The text variable must be set on the label so that the numbers selected display in the label
