@@ -7,15 +7,6 @@ root.title('Jim\'s Project')
 root.geometry('500x500')
 regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]')
 
-
-
-# Not sure if these lines of code are needed
-#def validate():
-#    if first_nameEntry.isdigit():
-#        messagebox.showerror(title=None, message='No numbers')
-#        return False
-#reg = root.register(validate) -- Separate line from the function above
-
         
 
 
@@ -32,7 +23,17 @@ def submit():
         messagebox.showerror(title='Hol up son', message='First name is a required field')
     else:
         labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
-        print(labelTxt)
+        #print(labelTxt)
+
+        #Work on the code to open up a new window that displays a welcome message.
+        first_nameEntry.delete(0, END)
+        last_nameEntry.delete(0, END)
+        new_window = Tk()
+        newLabel = Label(new_window, 
+                        font=('Calibri', 15))
+        newLabel.config(text=labelTxt)
+        newLabel.pack()
+
 
 
 
@@ -49,7 +50,21 @@ def enterBtn(event):
         messagebox.showerror(title='Hol up son', message='First/Last name is a required field')
     else:
         labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
-        print(labelTxt)
+        #print(labelTxt)
+
+        #Work on the code to open up a new window that displays a welcome message.
+        first_nameEntry.delete(0, END)
+        last_nameEntry.delete(0, END)
+        new_window = Tk()
+        newLabel = Label(new_window, 
+                        font=('Calibri', 15))
+        newLabel.config(text=labelTxt)
+        newLabel.pack()
+
+
+
+def closeWindow(event):
+    root.destroy()
 
 
 def clear():
@@ -76,8 +91,7 @@ firstNameLabel = Label(frame,
 firstNameLabel.grid(row=0,column=0)
 
 first_nameEntry = Entry(frame, 
-                    font=('Calibri', 18),
-                    bg='#a7b30c')
+                    font=('Calibri', 18))
 first_nameEntry.grid(row=1, column=0)
 
 
@@ -114,7 +128,6 @@ submitBtn = Button(frame,
                 background='#0630bd')
 submitBtn.grid(row=6 , column=0)
 
-root.bind('<Return>', enterBtn)
 
 clearBtn = Button(frame, 
                 text='Clear',
@@ -127,5 +140,7 @@ clearBtn = Button(frame,
                 background='#0630bd')
 clearBtn.grid(row=7 , column=0)
 
+root.bind('<Return>', enterBtn)
+root.bind('<Escape>', closeWindow)
 
 root.mainloop()
