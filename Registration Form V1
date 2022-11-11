@@ -45,6 +45,8 @@ def enterBtn(event):
         return False
     elif regex.search(first_name) != None or regex.search(last_name) != None:
         messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
+    elif first_name == "":
+        messagebox.showerror(title='Hol up son', message='First/Last name is a required field')
     else:
         labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
         print(labelTxt)
@@ -74,7 +76,8 @@ firstNameLabel = Label(frame,
 firstNameLabel.grid(row=0,column=0)
 
 first_nameEntry = Entry(frame, 
-                    font=('Calibri', 10))
+                    font=('Calibri', 18),
+                    bg='#a7b30c')
 first_nameEntry.grid(row=1, column=0)
 
 
@@ -85,7 +88,7 @@ lastNameLabel = Label(frame,
 lastNameLabel.grid(row=2,column=0)
 
 last_nameEntry = Entry(frame, 
-                    font=('Calibri', 10))
+                    font=('Calibri', 18))
 last_nameEntry.grid(row=3, column=0)
 
 
@@ -96,14 +99,19 @@ emailLabel = Label(frame,
 emailLabel.grid(row=4,column=0)
 
 emailEntry = Entry(frame, 
-                    font=('Calibri', 10))
+                    font=('Calibri', 18))
 emailEntry.grid(row=5, column=0)
 
 
 submitBtn = Button(frame, 
                 text='Submit',
                 command=submit,
-                padx=10)
+                padx=10,
+                pady=10,
+                foreground='white',
+                activeforeground='white',
+                activebackground='#0630bd',
+                background='#0630bd')
 submitBtn.grid(row=6 , column=0)
 
 root.bind('<Return>', enterBtn)
@@ -111,7 +119,12 @@ root.bind('<Return>', enterBtn)
 clearBtn = Button(frame, 
                 text='Clear',
                 command=clear,
-                padx=10)
+                padx=15,
+                pady=10,
+                foreground='white',
+                activeforeground='white',
+                activebackground='#0630bd',
+                background='#0630bd')
 clearBtn.grid(row=7 , column=0)
 
 
