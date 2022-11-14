@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import re
 from tkinter.font import BOLD
+import ast
 # will want to run 'pip install pillow' for pc at work
 
 
@@ -29,6 +30,34 @@ def on_enter(event):
 def on_leave(event):
     if userName.get() == '':
         userName.insert(0, 'Username')
+
+def signUp():
+    username = userName.get()
+    password = pw.get()
+    confirm = confirmPW.get()
+
+    if password == confirm:
+        try:
+            file=open('datasheet.txt', 'r+')
+            d=file.read()
+            r=ast.literal_eval(d)
+
+            dict2 = {username: password}
+            r.update(dict2)
+            file.truncate(0)
+            file.close()
+
+            file = open('datasheet.txt', 'w')
+            w=file.write(str(r))
+
+            messagebox.showinfo('Signup', 'Account successfully made')
+        except:
+            file=open('datasheet.txt', 'w')
+            pp=str({'Username':'password'})
+            file.write(pp)
+            file.close()
+    else:
+        messagebox.showerror('Error', 'Passwords do NOT match')
 
 
 #---------------- username widget section -----------------------------
@@ -85,12 +114,11 @@ confirmPW.bind('<FocusOut>', on_leave)
 
 #------------------ Buttons :D ------------------
 
-login = Button(frame, text='Login', bg='#57a1f8', fg='white', border=2, width=15).place(x=30, y=270)
+login = Button(frame, text='Login', bg='#0630bd', fg='white', border=2, width=15).place(x=30, y=270)
 
-forgotPW = Button(frame, text='Forgot Password', bg='#57a1f8', fg='white', border=2, width=15).place(x=160, y=270)
+forgotPW = Button(frame, text='Forgot Password', bg='#0630bd', fg='white', border=2, width=15).place(x=160, y=270)
 
-
-register = Button(frame, text='Sign Up', bg='#57a1f8', fg='white', border=2, width=34).place(x=30, y=320)
+register = Button(frame, text='Sign Up', bg='#0630bd', fg='white', border=2, width=34, command=signUp).place(x=30, y=320) #lighter blue color is #57a1f8, in case you want to go to it
 
 
 root.mainloop()
