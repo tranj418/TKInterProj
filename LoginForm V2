@@ -32,7 +32,86 @@ def on_leave(event):
         userName.insert(0, 'Username')
 
 def signUp():
-   pass
+    root = Tk()
+    root.title('Jim\'s Project')
+    root.geometry('500x500')
+    root.config(bg='white')
+
+    regLabel = Label(root, 
+        text='Registration Form - required fields (*)',
+        bg='white',
+        font=('Calibri', 20))
+    regLabel.pack()
+
+    frame = Frame(root, bg='white')
+    frame.pack()
+
+
+    firstNameLabel = Label(frame, 
+                        text='First Name *',
+                        font=('Calibri', 15),
+                        bg='white',
+                        pady=10)
+    firstNameLabel.grid(row=0,column=0)
+
+    first_nameEntry = Entry(frame,
+                    border=2, 
+                    font=('Calibri', 18))
+    first_nameEntry.grid(row=1, column=0)
+
+
+    lastNameLabel = Label(frame, 
+                        text='Last Name *',
+                        font=('Calibri', 15),
+                        bg='white',
+                        pady=10)
+    lastNameLabel.grid(row=2,column=0)
+
+    last_nameEntry = Entry(frame, 
+                    border=2,
+                    font=('Calibri', 18))
+    last_nameEntry.grid(row=3, column=0)
+
+
+    emailLabel = Label(frame, 
+                        text='Email',
+                        font=('Calibri', 15),
+                        bg='white',
+                        pady=10)
+    emailLabel.grid(row=4,column=0)
+
+    emailEntry = Entry(frame,
+                    border=2, 
+                    font=('Calibri', 18))
+    emailEntry.grid(row=5, column=0)
+
+
+    submitBtn = Button(frame, 
+                text='Submit',
+                padx=10,
+                pady=10,
+                foreground='white',
+                activeforeground='white',
+                activebackground='#0630bd',
+                background='#0630bd')
+    submitBtn.grid(row=6 , column=0)
+
+
+    clearBtn = Button(frame, 
+                text='Clear',
+                padx=15,
+                pady=10,
+                foreground='white',
+                activeforeground='white',
+                activebackground='#0630bd',
+                background='#0630bd')
+    clearBtn.grid(row=7 , column=0)
+
+    #root.bind('<Return>', enterBtn)
+    #root.bind('<Escape>', closeWindow)
+
+    root.mainloop()
+
 
 #---------------- username widget section -----------------------------
 
