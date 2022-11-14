@@ -1,0 +1,80 @@
+
+from tkinter import *
+from tkinter import messagebox
+import re
+from tkinter.font import BOLD
+import ast
+# will want to run 'pip install pillow' for pc at work
+
+
+root = Tk()
+root.title('Jim\'s Project')
+root.geometry('900x500+300+200')
+root.config(bg='white')
+#regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]') Will want to add logic making special characters required for pw
+
+img = PhotoImage(file='login.png')
+label = Label(root, image=img, border=0, bg='white').place(x=50, y =90)
+
+frame = Frame(root, width=350, height=390, bg='white')
+frame.place(x=480, y=50)
+
+heading = Label(frame, text='Login', fg='#0630bd', bg='white', font=('Microsoft Yahei UI Light', 25, BOLD))
+heading.place(x=100, y=5)
+
+
+#------------- section for functions for the username ---------------
+def on_enter(event):
+    userName.delete(0, END)
+
+def on_leave(event):
+    if userName.get() == '':
+        userName.insert(0, 'Username')
+
+def signUp():
+   pass
+
+#---------------- username widget section -----------------------------
+
+userName = Entry(frame, width=24, fg='black', border=2, bg='white', font=('Microsoft Yahei UI Light', 15))
+userName.place(x=30, y=80)
+userName.insert(0, 'Username')
+userName.bind('<FocusIn>', on_enter)
+userName.bind('<FocusOut>', on_leave)
+
+#Frame(frame, width=295, height=2, bg='black').place(x=25, y=107) ---Not sure if needed
+
+
+
+#------------- section for functions for the pw ---------------
+def on_enter(event):
+    pw.delete(0, END)
+
+def on_leave(event):
+    if pw.get() == '':
+        pw.insert(0, 'Password')
+
+
+#---------------- pw section -----------------------------
+
+
+pw = Entry(frame, width=24, fg='black', border=2, bg='white', font=('Microsoft Yahei UI Light', 15))
+pw.place(x=30, y=150)
+pw.insert(0, 'Password')
+pw.bind('<FocusIn>', on_enter)
+pw.bind('<FocusOut>', on_leave)
+
+#Frame(frame, width=295, height=2, bg='black').place(x=25, y=107) ---Not sure if needed
+
+
+
+#------------------ Buttons :D ------------------
+
+login = Button(frame, text='Login', bg='#0630bd', fg='white', border=2, width=15).place(x=30, y=200)
+
+forgotPW = Button(frame, text='Forgot Password', bg='#0630bd', fg='white', border=2, width=15).place(x=185, y=200)
+
+register = Button(frame, text='Sign Up', bg='#0630bd', fg='white', border=2, width=38, command=signUp).place(x=30, y=240) #lighter blue color is #57a1f8, in case you want to go to it
+
+
+root.mainloop()
