@@ -1,0 +1,94 @@
+
+from tkinter import *
+from tkinter import messagebox
+import re
+from tkinter.font import BOLD
+
+root = Tk()
+root.title('Jim\'s Project')
+root.geometry('900x500+300+200')
+root.config(bg='white')
+#regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]') Will want to add logic making special characters required for pw
+
+img = PhotoImage(file='login.png')
+label = Label(root, image=img, border=0, bg='white').place(x=50, y =90)
+
+frame = Frame(root, width=350, height=390, bg='white')
+frame.place(x=480, y=50)
+
+heading = Label(frame, text='Login', fg='#0630bd', bg='white', font=('Microsoft Yahei UI Light', 25, BOLD))
+heading.place(x=100, y=5)
+
+
+#------------- section for functions for the username ---------------
+def on_enter(event):
+    userName.delete(0, END)
+
+def on_leave(event):
+    if userName.get() == '':
+        userName.insert(0, 'Username')
+
+
+#---------------- username widget section -----------------------------
+
+userName = Entry(frame, width=25, fg='black', border=2, bg='white', font=('Microsoft Yahei UI Light', 15))
+userName.place(x=30, y=80)
+userName.insert(0, 'Username')
+userName.bind('<FocusIn>', on_enter)
+userName.bind('<FocusOut>', on_leave)
+
+#Frame(frame, width=295, height=2, bg='black').place(x=25, y=107) ---Not sure if needed
+
+
+
+#------------- section for functions for the pw ---------------
+def on_enter(event):
+    pw.delete(0, END)
+
+def on_leave(event):
+    if pw.get() == '':
+        pw.insert(0, 'Password')
+
+
+#---------------- pw section -----------------------------
+
+
+pw = Entry(frame, width=25, fg='black', border=2, bg='white', font=('Microsoft Yahei UI Light', 15))
+pw.place(x=30, y=150)
+pw.insert(0, 'Password')
+pw.bind('<FocusIn>', on_enter)
+pw.bind('<FocusOut>', on_leave)
+
+#Frame(frame, width=295, height=2, bg='black').place(x=25, y=107) ---Not sure if needed
+
+
+#------------- section for functions for confirm PW section // NOT SURE IF NEEDED ---------------
+def on_enter(event):
+    confirmPW.delete(0, END)
+
+def on_leave(event):
+    if confirmPW.get() == '':
+        confirmPW.insert(0, 'Password')
+
+
+#---------------- confirm PW section // NOT SURE IF NEEDED -----------------------------
+
+
+confirmPW = Entry(frame, width=25, fg='black', border=2, bg='white', font=('Microsoft Yahei UI Light', 15))
+confirmPW.place(x=30, y=220)
+confirmPW.insert(0, 'Confirm password')
+confirmPW.bind('<FocusIn>', on_enter)
+confirmPW.bind('<FocusOut>', on_leave)
+
+
+#------------------ Buttons :D ------------------
+
+login = Button(frame, text='Login', bg='#57a1f8', fg='white', border=2, width=15).place(x=30, y=270)
+
+forgotPW = Button(frame, text='Forgot Password', bg='#57a1f8', fg='white', border=2, width=15).place(x=160, y=270)
+
+
+register = Button(frame, text='Sign Up', bg='#57a1f8', fg='white', border=2, width=34).place(x=30, y=320)
+
+
+root.mainloop()
