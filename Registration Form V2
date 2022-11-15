@@ -1,80 +1,168 @@
+from tkinter import *
+from tkinter import messagebox
+import re
+from tkinter.font import BOLD
+import ast
+
+
+#------------------ Window setup -------------------
 root = Tk()
-    root.title('Jim\'s Project')
-    root.geometry('600x500')
-    root.config(bg='white')
+root.title('Jim\'s Project')
+root.geometry('650x500+300+200')
+root.config(bg='white')
+regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]')
+frame = Frame(root, width=420, height=400, bg='white')
+frame.place(x=90, y=50)
+        
 
-    regLabel = Label(root, 
-        text='Registration Form - required fields (*)',
-        bg='white',
-        fg='#0630bd',
-        font=('Microsoft Yahei UI Light', 20, BOLD))
-    regLabel.pack()
+#------------------ Function setup -------------------
+def submit():
+    first_name = first_nameEntry.get()
+    last_name = last_nameEntry.get()
 
-    frame = Frame(root, bg='white')
-    frame.pack()
+    if first_name.isdigit() or last_name.isdigit():
+        messagebox.showerror(title='Hol up son', message='No numbers in the first or last name field')
+        #return False -- not sure if it is needed lol
+    elif regex.search(first_name) != None or regex.search(last_name) != None:
+        messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
+    elif first_name == "":
+        messagebox.showerror(title='Hol up son', message='First name is a required field')
+    else:
+        labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
+        #print(labelTxt)
 
-
-    firstNameLabel = Label(frame, 
-                        text='First Name *',
-                        font=('Calibri', 15),
-                        bg='white',
-                        pady=10)
-    firstNameLabel.grid(row=0,column=0)
-
-    first_nameEntry = Entry(frame,
-                    border=2, 
-                    font=('Calibri', 18))
-    first_nameEntry.grid(row=1, column=0)
-
-
-    lastNameLabel = Label(frame, 
-                        text='Last Name *',
-                        font=('Calibri', 15),
-                        bg='white',
-                        pady=10)
-    lastNameLabel.grid(row=2,column=0)
-
-    last_nameEntry = Entry(frame, 
-                    border=2,
-                    font=('Calibri', 18))
-    last_nameEntry.grid(row=3, column=0)
+        #Work on the code to open up a new window that displays a welcome message.
+        first_nameEntry.delete(0, END)
+        last_nameEntry.delete(0, END)
+        new_window = Tk()
+        newLabel = Label(new_window, 
+                        font=('Calibri', 15))
+        newLabel.config(text=labelTxt)
+        newLabel.pack()
 
 
-    emailLabel = Label(frame, 
-                        text='Email *',
-                        font=('Calibri', 15),
-                        bg='white',
-                        pady=10)
-    emailLabel.grid(row=4,column=0)
 
-    emailEntry = Entry(frame,
-                    border=2, 
-                    font=('Calibri', 18))
-    emailEntry.grid(row=5, column=0)
+def enterBtn(event):
+    first_name = first_nameEntry.get()
+    last_name = last_nameEntry.get()
+
+    if first_name.isdigit() or last_name.isdigit():
+        messagebox.showerror(title='Hol up son', message='No numbers in the first or last name field')
+        return False
+    elif regex.search(first_name) != None or regex.search(last_name) != None:
+        messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
+    elif first_name == "":
+        messagebox.showerror(title='Hol up son', message='First/Last name is a required field')
+    else:
+        labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
+        #print(labelTxt)
+
+        #Work on the code to open up a new window that displays a welcome message.
+        first_nameEntry.delete(0, END)
+        last_nameEntry.delete(0, END)
+        new_window = Tk()
+        newLabel = Label(new_window, 
+                        font=('Calibri', 15))
+        newLabel.config(text=labelTxt)
+        newLabel.pack()
 
 
-    submitBtn = Button(frame, 
-                text='Submit',
-                padx=10,
-                pady=10,
-                foreground='white',
-                activeforeground='white',
-                activebackground='#0630bd',
-                background='#0630bd')
-    submitBtn.grid(row=6 , column=0)
+
+def closeWindow(event):
+    root.destroy()
 
 
-    clearBtn = Button(frame, 
-                text='Clear',
-                padx=15,
-                pady=10,
-                foreground='white',
-                activeforeground='white',
-                activebackground='#0630bd',
-                background='#0630bd')
-    clearBtn.grid(row=7 , column=0)
 
-    #root.bind('<Return>', enterBtn)
-    #root.bind('<Escape>', closeWindow)
+def clear():
+    first_nameEntry.delete(0, END)
+    last_nameEntry.delete(0, END)
+    emailEntry.delete(0, END)
 
-    root.mainloop()
+
+
+
+
+
+regLabel = Label(root,
+            bg='white',
+            fg='#0630bd', 
+            text='Registration Form - required fields (*)',
+            font=('Microsoft Yahei UI Light', 22, BOLD))
+regLabel.pack()
+
+userLabel = Label(frame, 
+                text='Username *',
+                font=('Microsoft Yahei UI Light', 16, BOLD),
+                bg='white',
+                fg='#0630bd')
+userLabel.place(x=190, y=20)
+
+userEntry = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16))
+userEntry.place(x=110, y=50)
+
+pwLabel = Label(frame, 
+                text='Password *',
+                font=('Microsoft Yahei UI Light', 16, BOLD),
+                bg='white',
+                fg='#0630bd')
+pwLabel.place(x=190, y=100)
+
+pwEntry = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16))
+pwEntry.place(x=110, y=130)
+
+emailLabel = Label(frame, 
+                text='Email *',
+                font=('Microsoft Yahei UI Light', 16, BOLD),
+                bg='white',
+                fg='#0630bd')
+emailLabel.place(x=210, y=180)
+
+emailEntry = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16))
+emailEntry.place(x=110, y=210)
+
+submitBtn = Button(frame, 
+                    text='Submit',
+                    width=15,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd')
+submitBtn.place(x=110, y=260)
+
+clearBtn = Button(frame, 
+                    text='Clear',
+                    width=15,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd')
+clearBtn.place(x=275, y=260)
+
+existingAcct = Label(frame, 
+                    text='Already have an existing account?',
+                    bg='white',
+                    font=('Microsoft Yahei UI Light', 11))
+existingAcct.place(x=105,y=330)
+
+loginBtn = Button(frame, 
+                    text='Login',
+                    width=6,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd')
+loginBtn.place(x=348,y=320)
+
+root.mainloop()
