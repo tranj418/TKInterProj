@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import re
 from tkinter.font import BOLD
-import ast
+import ast #Mainly to write the info to a text file....this is in the login form V1 
 
 
 #------------------ Window setup -------------------
@@ -10,79 +10,92 @@ root = Tk()
 root.title('Jim\'s Project')
 root.geometry('650x500+300+200')
 root.config(bg='white')
-regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]')
 frame = Frame(root, width=420, height=400, bg='white')
 frame.place(x=90, y=50)
-        
+
+
+
+#------------------ Regex setup ------------------- #Need to work on email format validation
+regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]') # This is mainly for the pw validation portion to confirm if the pw contains a special char
+#regex2 = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+# re.fullmatch(regex, email) == None:
+#        messagebox.showerror(title='Error', message='Invalid email format.')  
+
+
 
 #------------------ Function setup -------------------
 def submit():
-    first_name = first_nameEntry.get()
-    last_name = last_nameEntry.get()
+    userName = userEntry.get()
+    password = pwEntry.get()
+    email = emailEntry.get()
 
-    if first_name.isdigit() or last_name.isdigit():
-        messagebox.showerror(title='Hol up son', message='No numbers in the first or last name field')
-        #return False -- not sure if it is needed lol
-    elif regex.search(first_name) != None or regex.search(last_name) != None:
-        messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
-    elif first_name == "":
-        messagebox.showerror(title='Hol up son', message='First name is a required field')
+    if userName == '' and password == '':
+        messagebox.showerror(title='Error', message='Both username and password are required fields.')
+    elif userName == '':
+        messagebox.showerror(title='Error', message='Username is a required field.')
+    elif len(userName) < 5:
+        messagebox.showerror(title='Error', message='Username must be 5 characters long.')
+    elif password == '':
+        messagebox.showerror(title='Error', message='Password is a required field.')
+    elif len(password) < 8:
+        messagebox.showerror(title='Error', message='Password must be 8 characters long.')
+    elif regex.search(password) == None:
+        messagebox.showerror(title='Error', message='Minimum of one special character required for password - !@#$%&.')
+    elif email == '':
+        messagebox.showerror(title='Error', message='Email is a required field.')
     else:
-        labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
-        #print(labelTxt)
+        userEntry.delete(0, END)
+        pwEntry.delete(0, END)
+        emailEntry.delete(0, END)
+        messagebox.showinfo('Success', 'Account successfully created!')
 
-        #Work on the code to open up a new window that displays a welcome message.
-        first_nameEntry.delete(0, END)
-        last_nameEntry.delete(0, END)
-        new_window = Tk()
-        newLabel = Label(new_window, 
-                        font=('Calibri', 15))
-        newLabel.config(text=labelTxt)
-        newLabel.pack()
+def clear():
+    userEntry.delete(0, END)
+    pwEntry.delete(0, END)
+    emailEntry.delete(0, END)
 
-
-
-def enterBtn(event):
-    first_name = first_nameEntry.get()
-    last_name = last_nameEntry.get()
-
-    if first_name.isdigit() or last_name.isdigit():
-        messagebox.showerror(title='Hol up son', message='No numbers in the first or last name field')
-        return False
-    elif regex.search(first_name) != None or regex.search(last_name) != None:
-        messagebox.showerror(title='Hol up son', message='No special characters in the first or last name field')
-    elif first_name == "":
-        messagebox.showerror(title='Hol up son', message='First/Last name is a required field')
-    else:
-        labelTxt = f'Hello {first_name} {last_name} it is nice to meet you!'
-        #print(labelTxt)
-
-        #Work on the code to open up a new window that displays a welcome message.
-        first_nameEntry.delete(0, END)
-        last_nameEntry.delete(0, END)
-        new_window = Tk()
-        newLabel = Label(new_window, 
-                        font=('Calibri', 15))
-        newLabel.config(text=labelTxt)
-        newLabel.pack()
-
-
-
-def closeWindow(event):
+def login():
     root.destroy()
 
 
 
-def clear():
-    first_nameEntry.delete(0, END)
-    last_nameEntry.delete(0, END)
+#------------------ Key-binding function setup -------------------
+def enterBtn(event):
+    userName = userEntry.get()
+    password = pwEntry.get()
+    email = emailEntry.get()
+
+    if userName == '' and password == '':
+        messagebox.showerror(title='Error', message='Both username and password are required fields.')
+    elif userName == '':
+        messagebox.showerror(title='Error', message='Username is a required field.')
+    elif len(userName) < 5:
+        messagebox.showerror(title='Error', message='Username must be 5 characters long.')
+    elif password == '':
+        messagebox.showerror(title='Error', message='Password is a required field.')
+    elif len(password) < 8:
+        messagebox.showerror(title='Error', message='Password must be 8 characters long.')
+    elif regex.search(password) == None:
+        messagebox.showerror(title='Error', message='Minimum of one special character required for password - !@#$%&.')
+    elif email == '':
+        messagebox.showerror(title='Error', message='Email is a required field.')
+    else:
+        userEntry.delete(0, END)
+        pwEntry.delete(0, END)
+        emailEntry.delete(0, END)
+        messagebox.showinfo('Success', 'Account successfully created!')
+
+def closeWindow(event):
+    root.destroy()
+
+def clearFields(event):
+    userEntry.delete(0, END)
+    pwEntry.delete(0, END)
     emailEntry.delete(0, END)
 
 
 
-
-
-
+#------------------ Widget setup -------------------
 regLabel = Label(root,
             bg='white',
             fg='#0630bd', 
@@ -100,7 +113,8 @@ userLabel.place(x=190, y=20)
 userEntry = Entry(frame,
                 width=24,
                 bg='white',
-                font=('Microsoft Yahei UI Light', 16))
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
 userEntry.place(x=110, y=50)
 
 pwLabel = Label(frame, 
@@ -113,7 +127,8 @@ pwLabel.place(x=190, y=100)
 pwEntry = Entry(frame,
                 width=24,
                 bg='white',
-                font=('Microsoft Yahei UI Light', 16))
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
 pwEntry.place(x=110, y=130)
 
 emailLabel = Label(frame, 
@@ -126,7 +141,8 @@ emailLabel.place(x=210, y=180)
 emailEntry = Entry(frame,
                 width=24,
                 bg='white',
-                font=('Microsoft Yahei UI Light', 16))
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
 emailEntry.place(x=110, y=210)
 
 submitBtn = Button(frame, 
@@ -136,7 +152,8 @@ submitBtn = Button(frame,
                     foreground='white',
                     activeforeground='white',
                     activebackground='#0630bd',
-                    background='#0630bd')
+                    background='#0630bd',
+                    command=submit)
 submitBtn.place(x=110, y=260)
 
 clearBtn = Button(frame, 
@@ -146,7 +163,8 @@ clearBtn = Button(frame,
                     foreground='white',
                     activeforeground='white',
                     activebackground='#0630bd',
-                    background='#0630bd')
+                    background='#0630bd',
+                    command=clear)
 clearBtn.place(x=275, y=260)
 
 existingAcct = Label(frame, 
@@ -162,7 +180,16 @@ loginBtn = Button(frame,
                     foreground='white',
                     activeforeground='white',
                     activebackground='#0630bd',
-                    background='#0630bd')
+                    background='#0630bd',
+                    command=login)
 loginBtn.place(x=348,y=320)
+
+
+#------------------ Key bindings -------------------
+root.bind('<Return>', enterBtn)
+root.bind('<Escape>', closeWindow)
+root.bind('<Delete>', clearFields)
+
+
 
 root.mainloop()
