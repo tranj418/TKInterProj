@@ -104,7 +104,7 @@ regLabel = Label(root,
 regLabel.pack()
 
 userLabel = Label(frame, 
-                text='Username *',
+                text='Username * 5 chars minimum',
                 font=('Microsoft Yahei UI Light', 16, BOLD),
                 bg='white',
                 fg='#0630bd')
@@ -118,7 +118,7 @@ userEntry = Entry(frame,
 userEntry.place(x=110, y=50)
 
 pwLabel = Label(frame, 
-                text='Password *',
+                text='Password * 8 chars minimum and requires a special char',
                 font=('Microsoft Yahei UI Light', 16, BOLD),
                 bg='white',
                 fg='#0630bd')
