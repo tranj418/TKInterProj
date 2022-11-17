@@ -36,6 +36,41 @@ def signUp():
     root.title('Jim\'s Project')
     root.geometry('650x500+300+200')
     root.config(bg='white')
+    regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]')
+
+    #---Jim the logic check works but the main window keeps appearing in front of the second window when the messagebox appears
+    def submit():
+        userName2 = userEntry2.get()
+        password2 = pwEntry2.get()
+        email2 = emailEntry2.get()
+
+        if userName2 == '' and password2 == '':
+            messagebox.showerror(title='Error', message='Both username and password are required fields.')
+        elif userName2 == '':
+            messagebox.showerror(title='Error', message='Username is a required field.')
+        elif len(userName2) < 5:
+            messagebox.showerror(title='Error', message='Username must be 5 characters long.')
+        elif password2 == '':
+            messagebox.showerror(title='Error', message='Password is a required field.')
+        elif len(password2) < 8:
+            messagebox.showerror(title='Error', message='Password must be 8 characters long.')
+        elif regex.search(password2) == None:
+            messagebox.showerror(title='Error', message='Minimum of one special character required for password - !@#$%&.')
+        elif email2 == '':
+            messagebox.showerror(title='Error', message='Email is a required field.')
+        else:
+            userEntry2.delete(0, END)
+            pwEntry2.delete(0, END)
+            emailEntry2.delete(0, END)
+            messagebox.showinfo('Success', 'Account successfully created!')
+
+    def clear():
+        userEntry2.delete(0, END)
+        pwEntry2.delete(0, END)
+        emailEntry2.delete(0, END)
+
+    def login():
+        root.destroy()
 
     regLabel2 = Label(root,
             bg='white',
@@ -96,7 +131,8 @@ def signUp():
                     foreground='white',
                     activeforeground='white',
                     activebackground='#0630bd',
-                    background='#0630bd')
+                    background='#0630bd',
+                    command=submit)
     submitBtn2.place(x=110, y=260)
 
     clearBtn2 = Button(frame, 
@@ -106,7 +142,8 @@ def signUp():
                     foreground='white',
                     activeforeground='white',
                     activebackground='#0630bd',
-                    background='#0630bd')
+                    background='#0630bd',
+                    command=clear)
     clearBtn2.place(x=275, y=260)
 
     existingAcct2 = Label(frame, 
@@ -122,7 +159,8 @@ def signUp():
                     foreground='white',
                     activeforeground='white',
                     activebackground='#0630bd',
-                    background='#0630bd')
+                    background='#0630bd',
+                    command=login)
     loginBtn2.place(x=348,y=320)
 
     root.mainloop()
