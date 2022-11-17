@@ -34,81 +34,96 @@ def on_leave(event):
 def signUp():
     root = Tk()
     root.title('Jim\'s Project')
-    root.geometry('500x500')
+    root.geometry('650x500+300+200')
     root.config(bg='white')
 
-    regLabel = Label(root, 
-        text='Registration Form - required fields (*)',
-        bg='white',
-        font=('Calibri', 20))
-    regLabel.pack()
+    regLabel2 = Label(root,
+            bg='white',
+            fg='#0630bd', 
+            text='Registration Form - required fields (*)',
+            font=('Microsoft Yahei UI Light', 22, BOLD))
+    regLabel2.pack()
 
-    frame = Frame(root, bg='white')
-    frame.pack()
+    frame = Frame(root, width=420, height=400, bg='white')
+    frame.place(x=90, y=50)
 
+    userLabel2 = Label(frame, 
+                text='Username - 5 chars minimum *',
+                font=('Microsoft Yahei UI Light', 12, BOLD),
+                bg='white',
+                fg='#0630bd')
+    userLabel2.place(x=108, y=20)
 
-    firstNameLabel = Label(frame, 
-                        text='First Name *',
-                        font=('Calibri', 15),
-                        bg='white',
-                        pady=10)
-    firstNameLabel.grid(row=0,column=0)
+    userEntry2 = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
+    userEntry2.place(x=110, y=50)
 
-    first_nameEntry = Entry(frame,
-                    border=2, 
-                    font=('Calibri', 18))
-    first_nameEntry.grid(row=1, column=0)
+    pwLabel2 = Label(frame, 
+                text='Password - 8 chars minimum *',
+                font=('Microsoft Yahei UI Light', 12, BOLD),
+                bg='white',
+                fg='#0630bd')
+    pwLabel2.place(x=108, y=100)
 
+    pwEntry2 = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
+    pwEntry2.place(x=110, y=130)
 
-    lastNameLabel = Label(frame, 
-                        text='Last Name *',
-                        font=('Calibri', 15),
-                        bg='white',
-                        pady=10)
-    lastNameLabel.grid(row=2,column=0)
+    emailLabel2 = Label(frame, 
+                text='Email *',
+                font=('Microsoft Yahei UI Light', 12, BOLD),
+                bg='white',
+                fg='#0630bd')
+    emailLabel2.place(x=108, y=180)
 
-    last_nameEntry = Entry(frame, 
-                    border=2,
-                    font=('Calibri', 18))
-    last_nameEntry.grid(row=3, column=0)
+    emailEntry2 = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
+    emailEntry2.place(x=110, y=210)
 
+    submitBtn2 = Button(frame, 
+                    text='Submit',
+                    width=15,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd')
+    submitBtn2.place(x=110, y=260)
 
-    emailLabel = Label(frame, 
-                        text='Email',
-                        font=('Calibri', 15),
-                        bg='white',
-                        pady=10)
-    emailLabel.grid(row=4,column=0)
+    clearBtn2 = Button(frame, 
+                    text='Clear',
+                    width=15,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd')
+    clearBtn2.place(x=275, y=260)
 
-    emailEntry = Entry(frame,
-                    border=2, 
-                    font=('Calibri', 18))
-    emailEntry.grid(row=5, column=0)
+    existingAcct2 = Label(frame, 
+                    text='Already have an existing account?',
+                    bg='white',
+                    font=('Microsoft Yahei UI Light', 11))
+    existingAcct2.place(x=105,y=330)
 
-
-    submitBtn = Button(frame, 
-                text='Submit',
-                padx=10,
-                pady=10,
-                foreground='white',
-                activeforeground='white',
-                activebackground='#0630bd',
-                background='#0630bd')
-    submitBtn.grid(row=6 , column=0)
-
-
-    clearBtn = Button(frame, 
-                text='Clear',
-                padx=15,
-                pady=10,
-                foreground='white',
-                activeforeground='white',
-                activebackground='#0630bd',
-                background='#0630bd')
-    clearBtn.grid(row=7 , column=0)
-
-    #root.bind('<Return>', enterBtn)
-    #root.bind('<Escape>', closeWindow)
+    loginBtn2 = Button(frame, 
+                    text='Login',
+                    width=6,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd')
+    loginBtn2.place(x=348,y=320)
 
     root.mainloop()
 
