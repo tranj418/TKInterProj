@@ -32,13 +32,15 @@ def on_leave(event):
         userName.insert(0, 'Username')
 
 def signUp():
-    root = Tk()
-    root.title('Jim\'s Project')
-    root.geometry('650x500+300+200')
-    root.config(bg='white')
+    #-- root = Toplevel() does NOT work, the second window will appear but when the message box is thrown then second window will completely disappear
+    #root.destroy()#Could just destroy the original window but then it will need to be called again when clicking login on registration window
+    newWindow = Tk()
+    newWindow.title('Jim\'s Project')
+    newWindow.geometry('650x500+300+200')
+    newWindow.config(bg='white')
     regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]')
 
-    #---Jim the logic check works but the main window keeps appearing in front of the second window when the messagebox appears
+    #The logic check works but the main window keeps appearing in front of the second window when the messagebox appears
     def submit():
         userName2 = userEntry2.get()
         password2 = pwEntry2.get()
@@ -70,16 +72,16 @@ def signUp():
         emailEntry2.delete(0, END)
 
     def login():
-        root.destroy()
+        newWindow.destroy()
 
-    regLabel2 = Label(root,
+    regLabel2 = Label(newWindow,
             bg='white',
             fg='#0630bd', 
             text='Registration Form - required fields (*)',
             font=('Microsoft Yahei UI Light', 22, BOLD))
     regLabel2.pack()
 
-    frame = Frame(root, width=420, height=400, bg='white')
+    frame = Frame(newWindow, width=420, height=400, bg='white')
     frame.place(x=90, y=50)
 
     userLabel2 = Label(frame, 
