@@ -1,0 +1,86 @@
+from tkinter import *
+from tkinter.font import BOLD
+
+root = Tk()
+
+def equals():
+    pass
+
+def add():
+    pass
+
+def minus():
+    pass
+
+def division():
+    pass
+
+def multiplication():
+    pass
+
+def delete():
+    pass
+
+def backspace():
+    pass
+
+
+root.title('Calculator')
+root.geometry('400x460+200+200')
+strlabel = StringVar
+
+display = Label(root, width=55, height=4, bg='#00040a')
+display.pack()
+
+frame = Frame(root, bg='#00040a', width=390, height=380)
+frame.place(x=5, y=70)
+
+num1 = Button(frame, text=1, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num1.place(x=14,y=10)
+
+num2 = Button(frame, text=2, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num2.place(x=106,y=10)
+
+num3 = Button(frame, text=3, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num3.place(x=198,y=10)
+
+num4 = Button(frame, text=4, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num4.place(x=14,y=100)
+
+num5 = Button(frame, text=5, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num5.place(x=106,y=100)
+
+num6 = Button(frame, text=6, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num6.place(x=198,y=100)
+
+num7 = Button(frame, text=7, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num7.place(x=14,y=190)
+
+num8 = Button(frame, text=8, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num8.place(x=106,y=190)
+
+num9 = Button(frame, text=9, bg='#faf6f5', activebackground='#faf6f5', bd=3, width=11, height=5)
+num9.place(x=198,y=190)
+
+addition = Button(frame, text='+', bg='#fc5614', activebackground='#fc5614', bd=3, width=11, height=5)
+addition.place(x=292,y=10)
+
+subtract = Button(frame, text='-', bg='#fc5614', activebackground='#fc5614', bd=3, width=11, height=5)
+subtract.place(x=292,y=100)
+
+multiply = Button(frame, text='*', bg='#fc5614', activebackground='#fc5614', bd=3, width=11, height=5)
+multiply.place(x=292,y=190)
+
+clear = Button(frame, text='clear', bg='#fc5614', activebackground='#fc5614', bd=3, width=11, height=5)
+clear.place(x=14,y=280)
+
+decimal = Button(frame, text='.', bg='#fc5614', activebackground='#fc5614', bd=3, width=11, height=5)
+decimal.place(x=106,y=280)
+
+equals = Button(frame, text='=', bg='#fc5614', activebackground='#fc5614', bd=3, width=11, height=5)
+equals.place(x=198,y=280)
+
+backspace = Button(frame, text='<--', bg='#fc5614', activebackground='#fc5614', bd=3, width=11, height=5)
+backspace.place(x=292,y=280)
+
+root.mainloop()
