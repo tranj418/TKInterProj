@@ -27,7 +27,8 @@ def backspace():
 
 root.title('Calculator')
 root.geometry('400x460+200+200')
-strlabel = StringVar
+strlabel = StringVar()
+strText = ''
 
 display = Label(root, width=55, height=4, bg='#00040a')
 display.pack()
