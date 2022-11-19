@@ -3,8 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import re
 from tkinter.font import BOLD
-import ast
-# will want to run 'pip install pillow' for pc at work
+import mysql.connector
 
 
 root = Tk()
@@ -61,10 +60,25 @@ def signUp():
         elif email2 == '':
             messagebox.showerror(title='Error', message='Email is a required field.')
         else:
-            userEntry2.delete(0, END)
-            pwEntry2.delete(0, END)
-            emailEntry2.delete(0, END)
-            messagebox.showinfo('Success', 'Account successfully created!')
+            try:
+                mydb=mysql.connector.connect(
+                host= "127.0.0.1",
+                user= "root",
+                password= "2193ECAstle!!",
+                database='userDB',
+                autocommit=True)
+                mycursor= mydb.cursor()
+                print('Connected to database: USERDB - successfully')
+            except:
+                print('Connectivity Issues')
+
+            insertQuery= 'INSERT into userinfo (username, user_pw, email) values(%s, %s, %s)'
+            mycursor.execute(insertQuery, (userEntry2.get(), pwEntry2.get(), emailEntry2.get()))
+            mycursor.close()
+            messagebox.showinfo(title='Information', message='Account successfully created!')
+            clear()
+
+
 
     def clear():
         userEntry2.delete(0, END)
