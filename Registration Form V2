@@ -3,7 +3,7 @@ from tkinter import messagebox
 import re
 from tkinter.font import BOLD
 import mysql.connector
-#Do NOT delete the python file - regForm - as it is being called on for the login form
+#Do NOT delete this python file as it is being called on for the login form
 
 #------------------ Window setup -------------------
 root = Tk()
@@ -70,6 +70,7 @@ def clear():
 
 def login():
     root.destroy()
+    import loginForm
 
 
 
