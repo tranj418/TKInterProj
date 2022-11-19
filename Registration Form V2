@@ -3,8 +3,7 @@ from tkinter import messagebox
 import re
 from tkinter.font import BOLD
 import mysql.connector
-#import ast #Mainly to write the info to a text file....this is in the login form V1 
-
+#Do NOT delete this python file as it is being called on for the login form
 
 #------------------ Window setup -------------------
 root = Tk()
