@@ -40,13 +40,14 @@ def submit():
         except:
             print('Connectivity Issues')
         
-        userCheck = 'select exists(select * from userInfo where username = %s)'
-        userArg = [username]
-        row = mycursor.execute(userCheck, userArg)
-        if row == False:
-            messagebox.showerror(title='Error', message='Username not found')
-        else:
-            messagebox.showinfo(title='Success', message='Username found')
+        userCheck = 'update userInfo set user_pw = %s where username = %s'
+        queryArgument = [password_confirm, username]
+        row = mycursor.execute(userCheck, queryArgument)
+        mycursor.close()
+        messagebox.showinfo(title='Success', message='Password changed.')
+        userEntry.delete(0, END)
+        pwEntry.delete(0, END)
+        newPWEntry.delete(0, END)
 
 
 #------------------ Widget setup -------------------
