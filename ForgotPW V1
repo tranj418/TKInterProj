@@ -1,0 +1,113 @@
+from tkinter import *
+from tkinter import messagebox
+import re
+from tkinter.font import BOLD
+import mysql.connector
+#Do NOT delete the python file - regForm - as it is being called on for the login form
+
+#------------------ Window setup -------------------
+root = Tk()
+root.title('Jim\'s Project')
+root.geometry('650x500+300+200')
+root.config(bg='white')
+frame = Frame(root, width=420, height=400, bg='white')
+frame.place(x=90, y=50)
+regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]')
+
+def submit():
+    username = userEntry.get()
+    password = pwEntry.get()
+    password_confirm = newPWEntry.get()
+
+    if username == '' or password == '' or password_confirm == '':
+        messagebox.showerror(title='Error', message='All fields are required.')
+    elif len(password) < 8 or len(password_confirm) < 8:
+        messagebox.showerror(title='Error', message='Passwords must be 8 chars minimum.')
+    elif regex.search(password) == None or regex.search(password_confirm) == None:
+        messagebox.showerror(title='Error', message='Minimum of one special character required for password - !@#$%&.')
+    elif password != password_confirm:
+        messagebox.showerror(title='Error', message='Passwords do NOT match.')
+    else:
+        try:
+            mydb=mysql.connector.connect(
+            host= "127.0.0.1",
+            user= "root",
+            password= "2193ECAstle!!",
+            database='userDB',
+            autocommit=True)
+            mycursor= mydb.cursor()
+            print('Connected to database: USERDB - successfully')
+        except:
+            print('Connectivity Issues')
+        
+        userCheck = 'select exists(select * from userInfo where username = %s)'
+        row = mycursor.execute(userCheck, (username))
+        if row == 0:
+            messagebox.showerror(title='Error', message='Username not found')
+        else:
+            messagebox.showinfo(title='Success', message='Username found')
+
+
+#------------------ Widget setup -------------------
+regLabel = Label(root,
+            bg='white',
+            fg='#0630bd', 
+            text='RESET PASSWORD',
+            font=('Microsoft Yahei UI Light', 22, BOLD))
+regLabel.pack()
+
+userLabel = Label(frame, 
+                text='Username',
+                font=('Microsoft Yahei UI Light', 12, BOLD),
+                bg='white',
+                fg='#0630bd')
+userLabel.place(x=110, y=20)
+
+userEntry = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
+userEntry.place(x=110, y=50)
+
+pwLabel = Label(frame, 
+                text='New Password',
+                font=('Microsoft Yahei UI Light', 12, BOLD),
+                bg='white',
+                fg='#0630bd')
+pwLabel.place(x=110, y=100)
+
+pwEntry = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
+pwEntry.place(x=110, y=130)
+
+newPWLabel = Label(frame, 
+                text='Confirm Password',
+                font=('Microsoft Yahei UI Light', 12, BOLD),
+                bg='white',
+                fg='#0630bd')
+newPWLabel.place(x=110, y=180)
+
+newPWEntry = Entry(frame,
+                width=24,
+                bg='white',
+                font=('Microsoft Yahei UI Light', 16),
+                bd=2)
+newPWEntry.place(x=110, y=210)
+
+submitBtn = Button(frame, 
+                    text='Submit',
+                    width=15,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd',
+                    command=submit)
+submitBtn.place(x=110, y=260)
+
+
+root.mainloop()
