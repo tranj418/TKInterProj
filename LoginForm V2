@@ -1,99 +1,47 @@
+
 from tkinter import *
 from tkinter import messagebox
 import re
 from tkinter.font import BOLD
 import mysql.connector
-#Do NOT delete this python file as it is being called on for the login form
 
-#------------------ Window setup -------------------
+
 root = Tk()
 root.title('Jim\'s Project')
-root.geometry('650x500+300+200')
+root.geometry('900x500+300+200')
 root.config(bg='white')
-frame = Frame(root, width=420, height=400, bg='white')
-frame.place(x=90, y=50)
+#regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]') Will want to add logic making special characters required for pw
+
+img = PhotoImage(file='login.png')
+label = Label(root, image=img, border=0, bg='white').place(x=50, y =90)
+
+frame = Frame(root, width=350, height=390, bg='white')
+frame.place(x=480, y=50)
+
+heading = Label(frame, text='Login', fg='#0630bd', bg='white', font=('Microsoft Yahei UI Light', 25, BOLD))
+heading.place(x=100, y=5)
 
 
+#------------- section for functions for the username ---------------
+def on_enter(event):
+    userName.delete(0, END)
 
-#------------------ Regex setup ------------------- #Need to work on email format validation
-regex = re.compile ('[@_!#$%^&*()<>?/\|}{~:-]') # This is mainly for the pw validation portion to confirm if the pw contains a special char
-#regex2 = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
-# re.fullmatch(regex, email) == None:
-#        messagebox.showerror(title='Error', message='Invalid email format.')  
+def on_leave(event):
+    if userName.get() == '':
+        userName.insert(0, 'Username')
 
+def signUp():
+    root.destroy()
+    #To bring in second login page and close the first one. Will need the same thing for the registration form
+    import regForm
 
-
-#------------------ Function setup -------------------
-def submit():
-    userName = userEntry.get()
-    password = pwEntry.get()
-    email = emailEntry.get()
-
-    if userName == '' and password == '':
-        messagebox.showerror(title='Error', message='Both username and password are required fields.')
-    elif userName == '':
-        messagebox.showerror(title='Error', message='Username is a required field.')
-    elif len(userName) < 5:
-        messagebox.showerror(title='Error', message='Username must be 5 characters long.')
-    elif password == '':
-        messagebox.showerror(title='Error', message='Password is a required field.')
-    elif len(password) < 8:
-        messagebox.showerror(title='Error', message='Password must be 8 characters long.')
-    elif regex.search(password) == None:
-        messagebox.showerror(title='Error', message='Minimum of one special character required for password - !@#$%&.')
-    elif email == '':
-        messagebox.showerror(title='Error', message='Email is a required field.')
-    else:
-        try:
-            mydb=mysql.connector.connect(
-            host= "127.0.0.1",
-            user= "root",
-            password= "2193ECAstle!!",
-            database='userDB',
-            autocommit=True)
-            mycursor= mydb.cursor()
-            print('Connected to database: USERDB - successfully')
-        except:
-            print('Connectivity Issues')
-
-        insertQuery= 'INSERT into userinfo (username, user_pw, email) values(%s, %s, %s)'
-        mycursor.execute(insertQuery, (userEntry.get(), pwEntry.get(), emailEntry.get()))
-        mycursor.close()
-        messagebox.showinfo(title='Information', message='Account successfully created!')
-        clear()
-
-    
-def clear():
-    userEntry.delete(0, END)
-    pwEntry.delete(0, END)
-    emailEntry.delete(0, END)
+def forgotPW():
+    root.destroy()
+    import forgotPW
 
 def login():
-    root.destroy()
-    import loginForm
-
-
-
-#------------------ Key-binding function setup -------------------
-def enterBtn(event):
-    userName = userEntry.get()
-    password = pwEntry.get()
-    email = emailEntry.get()
-
-    if userName == '' and password == '':
-        messagebox.showerror(title='Error', message='Both username and password are required fields.')
-    elif userName == '':
-        messagebox.showerror(title='Error', message='Username is a required field.')
-    elif len(userName) < 5:
-        messagebox.showerror(title='Error', message='Username must be 5 characters long.')
-    elif password == '':
-        messagebox.showerror(title='Error', message='Password is a required field.')
-    elif len(password) < 8:
-        messagebox.showerror(title='Error', message='Password must be 8 characters long.')
-    elif regex.search(password) == None:
-        messagebox.showerror(title='Error', message='Minimum of one special character required for password - !@#$%&.')
-    elif email == '':
-        messagebox.showerror(title='Error', message='Email is a required field.')
+    if userName.get() == '' or pw.get() == '':
+        messagebox.showerror(title='Error', message='All fields are required.')
     else:
         try:
             mydb=mysql.connector.connect(
@@ -107,117 +55,58 @@ def enterBtn(event):
         except:
             print('Connectivity Issues')
 
-        insertQuery= 'INSERT into userinfo (username, user_pw, email) values(%s, %s, %s)'
-        mycursor.execute(insertQuery, (userEntry.get(), pwEntry.get(), emailEntry.get()))
-        mycursor.close()
-        messagebox.showinfo(title='Information', message='Account successfully created!')
-        clear()
-
-def closeWindow(event):
-    root.destroy()
-
-def clearFields(event):
-    userEntry.delete(0, END)
-    pwEntry.delete(0, END)
-    emailEntry.delete(0, END)
+        loginQuery = 'select * from userInfo where userName=%s and user_pw=%s'
+        mycursor.execute(loginQuery, (userName.get(), pw.get()))
+        row = mycursor.fetchone()
+        if row == None:
+            messagebox.showerror(title='Error', message='Invalid username and password')
+        else:
+            messagebox.showinfo(title='Success', message='Logging in now.')
+            userName.delete(0, END)
+            pw.delete(0, END)
 
 
+#---------------- username widget section -----------------------------
 
-#------------------ Widget setup -------------------
-regLabel = Label(root,
-            bg='white',
-            fg='#0630bd', 
-            text='Registration Form - required fields (*)',
-            font=('Microsoft Yahei UI Light', 22, BOLD))
-regLabel.pack()
+userName = Entry(frame, width=24, fg='black', border=2, bg='white', font=('Microsoft Yahei UI Light', 15))
+userName.place(x=30, y=80)
+userName.insert(0, 'Username')
+userName.bind('<FocusIn>', on_enter)
+userName.bind('<FocusOut>', on_leave)
 
-userLabel = Label(frame, 
-                text='Username * 5 chars minimum',
-                font=('Microsoft Yahei UI Light', 12, BOLD),
-                bg='white',
-                fg='#0630bd')
-userLabel.place(x=110, y=20)
-
-userEntry = Entry(frame,
-                width=24,
-                bg='white',
-                font=('Microsoft Yahei UI Light', 16),
-                bd=2)
-userEntry.place(x=110, y=50)
-
-pwLabel = Label(frame, 
-                text='Password * 8 chars minimum',
-                font=('Microsoft Yahei UI Light', 12, BOLD),
-                bg='white',
-                fg='#0630bd')
-pwLabel.place(x=110, y=100)
-
-pwEntry = Entry(frame,
-                width=24,
-                bg='white',
-                font=('Microsoft Yahei UI Light', 16),
-                bd=2)
-pwEntry.place(x=110, y=130)
-
-emailLabel = Label(frame, 
-                text='Email *',
-                font=('Microsoft Yahei UI Light', 12, BOLD),
-                bg='white',
-                fg='#0630bd')
-emailLabel.place(x=110, y=180)
-
-emailEntry = Entry(frame,
-                width=24,
-                bg='white',
-                font=('Microsoft Yahei UI Light', 16),
-                bd=2)
-emailEntry.place(x=110, y=210)
-
-submitBtn = Button(frame, 
-                    text='Submit',
-                    width=15,
-                    font=('Microsoft Yahei UI Light', 10),
-                    foreground='white',
-                    activeforeground='white',
-                    activebackground='#0630bd',
-                    background='#0630bd',
-                    command=submit)
-submitBtn.place(x=110, y=260)
-
-clearBtn = Button(frame, 
-                    text='Clear',
-                    width=15,
-                    font=('Microsoft Yahei UI Light', 10),
-                    foreground='white',
-                    activeforeground='white',
-                    activebackground='#0630bd',
-                    background='#0630bd',
-                    command=clear)
-clearBtn.place(x=275, y=260)
-
-existingAcct = Label(frame, 
-                    text='Already have an existing account?',
-                    bg='white',
-                    font=('Microsoft Yahei UI Light', 11))
-existingAcct.place(x=105,y=330)
-
-loginBtn = Button(frame, 
-                    text='Login',
-                    width=6,
-                    font=('Microsoft Yahei UI Light', 10),
-                    foreground='white',
-                    activeforeground='white',
-                    activebackground='#0630bd',
-                    background='#0630bd',
-                    command=login)
-loginBtn.place(x=348,y=320)
-
-
-#------------------ Key bindings -------------------
-root.bind('<Return>', enterBtn)
-root.bind('<Escape>', closeWindow)
-root.bind('<Delete>', clearFields)
+#Frame(frame, width=295, height=2, bg='black').place(x=25, y=107) ---Not sure if needed
 
 
 
-root.mainloop()
+#------------- section for functions for the pw ---------------
+def on_enter(event):
+    pw.delete(0, END)
+
+def on_leave(event):
+    if pw.get() == '':
+        pw.insert(0, 'Password')
+
+
+#---------------- pw section -----------------------------
+
+
+pw = Entry(frame, width=24, fg='black', border=2, bg='white', font=('Microsoft Yahei UI Light', 15))
+pw.place(x=30, y=150)
+pw.insert(0, 'Password')
+pw.bind('<FocusIn>', on_enter)
+pw.bind('<FocusOut>', on_leave)
+
+#Frame(frame, width=295, height=2, bg='black').place(x=25, y=107) ---Not sure if needed
+
+
+
+#------------------ Buttons :D ------------------
+
+loginbtn = Button(frame, text='Login', bg='#0630bd', fg='white', border=2, width=15, command=login).place(x=30, y=200)
+
+forgotPWbtn = Button(frame, text='Forgot Password', bg='#0630bd', fg='white', border=2, width=15, command=forgotPW).place(x=185, y=200)
+
+registerbtn = Button(frame, text='Sign Up', bg='#0630bd', fg='white', border=2, width=38, command=signUp).place(x=30, y=240) #lighter blue color is #57a1f8, in case you want to go to it
+
+
+root.mainloop() 
