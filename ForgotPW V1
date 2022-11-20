@@ -49,6 +49,10 @@ def submit():
         pwEntry.delete(0, END)
         newPWEntry.delete(0, END)
 
+def login():
+    root.destroy()
+    import loginForm
+
 
 #------------------ Widget setup -------------------
 regLabel = Label(root,
@@ -110,6 +114,17 @@ submitBtn = Button(frame,
                     background='#0630bd',
                     command=submit)
 submitBtn.place(x=110, y=260)
+
+loginBtn = Button(frame, 
+                    text='Login',
+                    width=15,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd',
+                    command=login)
+loginBtn.place(x=110, y=310)
 
 
 root.mainloop()
