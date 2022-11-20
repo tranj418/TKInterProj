@@ -41,8 +41,9 @@ def submit():
             print('Connectivity Issues')
         
         userCheck = 'select exists(select * from userInfo where username = %s)'
-        row = mycursor.execute(userCheck, (username))
-        if row == 0:
+        userArg = [username]
+        row = mycursor.execute(userCheck, userArg)
+        if row == False:
             messagebox.showerror(title='Error', message='Username not found')
         else:
             messagebox.showinfo(title='Success', message='Username found')
