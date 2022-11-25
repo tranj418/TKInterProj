@@ -1,102 +1,107 @@
+from asyncore import read
 from tkinter import *
+import tkinter as tk
+from tkinter import ttk
+from tkinter import font
 from tkinter.font import BOLD
+from tkinter.ttk import Treeview
 import mysql.connector
 
 
-##########################
-# Database connection setup
-##########################
-mydb=mysql.connector.connect(
-    host= "127.0.0.1",
-    user= "root",
-    password= "2193ECAstle!!",
-    database="one_piece",
-    autocommit=True)
-mycursor= mydb.cursor()
+def connection():
+    conn=mysql.connector.connect(
+            host= "127.0.0.1",
+            user= "root",
+            password= "2193ECAstle!!",
+            database='one_piece')
+    return conn
 
-#mycursor.execute('select * from characters') #To be utilized in the submit function for testing
+def refreshTable():
+    for data in tree.get_children():
+        tree.delete(data)
+
+    for array in read():
+        tree.insert(parent='', index='end', iid=array, text='', values=(array), tag='orow')
+
+    tree.tag_configure('orow', background='#EEEEEE', font=('Arial', 12))
+    tree.grid(row=10, column=0, columnspan=5, rowspan=11, padx=10, pady=20)
+
+def read():
+    conn = connection()
+    cursor=conn.cursor()
+    cursor.execute('select * from char_snapshot')
+    results = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return results
 
 
-##########################
-#Area for function setup
-##########################
 
-def submit():
-    mydb=mysql.connector.connect(
-        host= "127.0.0.1",
-        user= "root",
-        password= "2193ECAstle!!",
-        database="one_piece",
-        autocommit=True)
-    mycursor= mydb.cursor()
 
-    #Test to insert data into the MySQL table
-    mycursor.execute('insert into haki values(:haki_type)',
-                    {
-                        'haki_type': haki_type_entry.get()
-                    })
-
-def clear():
-    firstName_Entry.delete(0, END) #If utilizing a method with entry widgets, make sure the .grid is SEPARATE from the main entry widget setup
-    lastName_Entry.delete(0, END)
-    haki_type_entry.delete(0, END)
-
-def showRecords():
-    mydb=mysql.connector.connect(
-        host= "127.0.0.1",
-        user= "root",
-        password= "2193ECAstle!!",
-        database="one_piece",
-        autocommit=True)
-    mycursor= mydb.cursor()
-
-    mycursor.execute('select * from characters')
-    mycursor.fetchall()
-
-    print(mycursor.fetchall())
-
-#######General Tk setup#######
+#------------------ Window setup -------------------
 root = Tk()
-root.geometry('650x500')
+root.title('One Piece Project')
+root.geometry('1080x720')
+root.config(bg='white')
+tree = Treeview(root)
+
+header = Label(root, text='One Piece GUI (CRUD operations)', font=('Arial', 20, BOLD))
+header.grid(row=0, column=0, columnspan=8, rowspan=2, padx=50, pady=50)
+
+nameLabel = Label(root, text='Character Name', font=('Arial', 16, BOLD))
+crewLabel = Label(root, text='Crew Name', font=('Arial', 16, BOLD))
+hakiLabel = Label(root, text='Haki Type', font=('Arial', 16, BOLD))
+bountyLabel = Label(root, text='Bounty', font=('Arial', 16, BOLD))
+powerLvlLabel = Label(root, text='Power Level', font=('Arial', 16, BOLD))
+
+nameLabel.grid(row=4, column=0, columnspan=1, padx=20, pady=15)
+crewLabel.grid(row=5, column=0, columnspan=1, padx=20, pady=15)
+hakiLabel.grid(row=6, column=0, columnspan=1, padx=20, pady=15)
+bountyLabel.grid(row=7, column=0, columnspan=1, padx=20, pady=15)
+powerLvlLabel.grid(row=8, column=0, columnspan=1, padx=20, pady=15)
+
+nameEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
+crewEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
+hakiEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
+bountyEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
+powerLvlEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
+
+nameEntry.grid(row=4, column=1, columnspan=1, padx=50, pady=15)
+crewEntry.grid(row=5, column=1, columnspan=1, padx=50, pady=15)
+hakiEntry.grid(row=6, column=1, columnspan=1, padx=50, pady=15)
+bountyEntry.grid(row=7, column=1, columnspan=1, padx=50, pady=15)
+powerLvlEntry.grid(row=8, column=1, columnspan=1, padx=50, pady=15)
+
+addBtn = Button(root, text='Add', font=('Arial', 15, BOLD), padx=20, pady=10)
+delBtn = Button(root, text='Delete', font=('Arial', 15, BOLD), padx=20, pady=10)
+updBtn = Button(root, text='Update', font=('Arial', 15, BOLD), padx=20, pady=10)
+disBtn = Button(root, text='Display Records', font=('Arial', 15, BOLD), padx=20, pady=10)
+
+addBtn.grid(row=4, column=4)
+delBtn.grid(row=5, column=4)
+updBtn.grid(row=6, column=4)
+disBtn.grid(row=7, column=4)
+
+style = ttk.Style()
+style.configure('Treeview.Heading', font=('Arial', BOLD, 15))
+tree['columns'] = ('Char_name', 'pirate_crew', 'df', 'haki_type', 'power_level_desc', 'bounty')
+
+tree.column('#0', width=0, stretch=NO)
+tree.column('Char_name', width=170, anchor=W)
+tree.column('pirate_crew', width=170, anchor=W)
+tree.column('df', width=170, anchor=W)
+tree.column('haki_type', width=170, anchor=W)
+tree.column('power_level_desc', width=170, anchor=W)
+tree.column('bounty', width=170, anchor=W)
+
+tree.heading('Char_name', text='Character Name', anchor=W)
+tree.heading('pirate_crew', text='Crew Name', anchor=W)
+tree.heading('df', text='Devi; Fruit', anchor=W)
+tree.heading('haki_type', text='Haki Type', anchor=W)
+tree.heading('power_level_desc', text='Power Lvl', anchor=W)
+tree.heading('bounty', text='Bounty', anchor=W)
 
 
-###############################
-#Area for widgets
-###############################
-
-label = Label(root, 
-            text='One Piece Homepage',
-            font=('Calibri', 15, BOLD),
-            bg='#0596f0',
-            width=30,
-            height=3).grid(row=0, column=2)
-
-first_name = Label(root,
-            text='First Name').grid(row=2, column=0)
-firstName_Entry = Entry(root)
-firstName_Entry.grid(row=2, column=1)
-
-
-last_name = Label(root, 
-            text='Last Name').grid(row=3, column=0)
-lastName_Entry = Entry(root)
-lastName_Entry.grid(row=3, column=1)
-
-haki_type = Label(root, 
-            text='Haki Type').grid(row=4, column=0)
-haki_type_entry = Entry(root)
-haki_type_entry.grid(row=4, column=1)
-
-submit = Button(root, 
-                text='Submit',
-                command=submit).grid(row=5, column=0)
-
-clear = Button(root, 
-                text='Clear',
-                command=clear).grid(row=5, column=1)
-
-showAll = Button(root, 
-                text='Show All',
-                command=showRecords). grid(row=5, column=2)
+refreshTable()
 
 root.mainloop()
