@@ -21,6 +21,9 @@ def add():
 def delete():
     todoItems.delete(todoItems.curselection())
 
+def clear():
+    todoItems.delete(0, END)
+
 
 def enterBtn(event):
     task_entry = taskEntry.get()
@@ -48,7 +51,7 @@ addBtn.place(x=220, y=150)
 deleteBtn = Button(root, text='Delete task', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5, command=delete)
 deleteBtn.place(x=220, y=200)
 
-clearBtn = Button(root, text='Clear List', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5)
+clearBtn = Button(root, text='Clear List', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5, command=clear)
 clearBtn.place(x=220, y=250)
 
 saveBtn = Button(root, text='Save List', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5)
