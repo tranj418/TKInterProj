@@ -1,0 +1,59 @@
+from tkinter import *
+from tkinter.font import BOLD
+
+
+root = Tk()
+root.geometry('500x500') #W x H
+root.config(background='WHITE')
+tasklist = [] #not sure if it is needed, just in case
+listIndx = 1
+
+
+#--------------function setup-----------------
+def add():
+    task_entry = taskEntry.get()
+    global listIndx
+
+    todoItems.insert(listIndx, task_entry)
+    #todoItems.insert(Listbox.size(), task_entry)
+    listIndx += 1
+
+def delete():
+    todoItems.delete(todoItems.curselection())
+
+
+def enterBtn(event):
+    task_entry = taskEntry.get()
+    global listIndx
+
+    #todoItems.insert(listIndx, task_entry)
+    todoItems.insert(todoItems.size(), task_entry)
+    listIndx += 1
+    taskEntry.delete(0, END)
+
+
+#--------------Widget setup-----------------
+header = Label(root, text='To Do List', font=('Arial', 18, BOLD), background='#31b0f5')
+header.place(x=200, y=0)
+
+taskEntry = Entry(root, width=45, bd=2, font=('Arial', 10))
+taskEntry.place(x=20, y=80)
+
+todoItems = Listbox(root, background='#f7d47c', width=30, height=18)
+todoItems.place(x=20, y=150)
+
+addBtn = Button(root, text='Add task', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5, command=add)
+addBtn.place(x=220, y=150)
+
+deleteBtn = Button(root, text='Delete task', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5, command=delete)
+deleteBtn.place(x=220, y=200)
+
+clearBtn = Button(root, text='Clear List', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5)
+clearBtn.place(x=220, y=250)
+
+saveBtn = Button(root, text='Save List', font=('Arial', 10, BOLD), bd=3, padx=5, pady=5)
+saveBtn.place(x=220, y=300)
+
+root.bind('<Return>', enterBtn) 
+
+root.mainloop()
