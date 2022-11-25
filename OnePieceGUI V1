@@ -1,107 +1,165 @@
-from asyncore import read
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font
 from tkinter.font import BOLD
 from tkinter.ttk import Treeview
+from unicodedata import name
 import mysql.connector
 
 
-def connection():
-    conn=mysql.connector.connect(
+root = Tk()
+root.geometry('1920x1080')
+root.config(background='White')
+
+mydb=mysql.connector.connect(
             host= "127.0.0.1",
             user= "root",
             password= "2193ECAstle!!",
-            database='one_piece')
-    return conn
+            database='one_piece',
+            autocommit=True)
+mycursor= mydb.cursor()
 
-def refreshTable():
-    for data in tree.get_children():
-        tree.delete(data)
-
-    for array in read():
-        tree.insert(parent='', index='end', iid=array, text='', values=(array), tag='orow')
-
-    tree.tag_configure('orow', background='#EEEEEE', font=('Arial', 12))
-    tree.grid(row=10, column=0, columnspan=5, rowspan=11, padx=10, pady=20)
-
-def read():
-    conn = connection()
-    cursor=conn.cursor()
-    cursor.execute('select * from char_snapshot')
-    results = cursor.fetchall()
-    conn.commit()
-    conn.close()
-    return results
+query = 'select * from char_snapshot'
+mycursor.execute(query)
 
 
+#-------------------widget section for labels------------------------
+header = Label(root, text='One Piece GUI', font=('Arial', 24, BOLD), background='GOLD')
+header.place(x=700, y=0)
+
+charName = Label(root, text='Name', font=('Arial', 16, BOLD), background='White')
+charName.place(x=0, y=100)
+
+crewName = Label(root, text='Crew Name', font=('Arial', 16, BOLD), background='White')
+crewName.place(x=0, y=160)
+
+dfName = Label(root, text='Devil Fruit', font=('Arial', 16, BOLD), background='White')
+dfName.place(x=0, y=220)
+
+hakiName = Label(root, text='Haki Type', font=('Arial', 16, BOLD), background='White')
+hakiName.place(x=0, y=280)
+
+plName = Label(root, text='Power Level', font=('Arial', 16, BOLD), background='White')
+plName.place(x=0, y=340)
+
+bountyLabel = Label(root, text='Bounty', font=('Arial', 16, BOLD), background='White')
+bountyLabel.place(x=0, y=400)
 
 
-#------------------ Window setup -------------------
-root = Tk()
-root.title('One Piece Project')
-root.geometry('1080x720')
-root.config(bg='white')
+#-------------------widget section for entry boxes------------------------
+nameEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
+nameEntry.place(x=150, y=100)
+
+crewEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
+crewEntry.place(x=150, y=160)
+
+dfEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
+dfEntry.place(x=150, y=220)
+
+hakiEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
+hakiEntry.place(x=150, y=280)
+
+plEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
+plEntry.place(x=150, y=340)
+
+bountyEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
+bountyEntry.place(x=150, y=400)
+
+
+#-------------------widget section for buttons------------------------
+displayBtn = Button(root, text='Display', font=('Arial', 16, BOLD), padx=20)
+displayBtn.place(x=0, y=480)
+
+addBtn = Button(root, text='Add', font=('Arial', 16, BOLD), padx=20)
+addBtn.place(x=140, y=480)
+
+deleteBtn = Button(root, text='Delete', font=('Arial', 16, BOLD), padx=20)
+deleteBtn.place(x=250, y=480)
+
+updateBtn = Button(root, text='Update', font=('Arial', 16, BOLD), padx=20)
+updateBtn.place(x=380, y=480)
+
+
 tree = Treeview(root)
+tree['show']='headings'
 
-header = Label(root, text='One Piece GUI (CRUD operations)', font=('Arial', 20, BOLD))
-header.grid(row=0, column=0, columnspan=8, rowspan=2, padx=50, pady=50)
+# themes available to use 'clam', 'alt', 'default', 'classic'   these 2 do not work --> 'vista', 'xpnative'
+s = ttk.Style(root)
+s.theme_use('default')
 
-nameLabel = Label(root, text='Character Name', font=('Arial', 16, BOLD))
-crewLabel = Label(root, text='Crew Name', font=('Arial', 16, BOLD))
-hakiLabel = Label(root, text='Haki Type', font=('Arial', 16, BOLD))
-bountyLabel = Label(root, text='Bounty', font=('Arial', 16, BOLD))
-powerLvlLabel = Label(root, text='Power Level', font=('Arial', 16, BOLD))
+s.configure('Treeview.Heading', foreground='red', font=('Helvetica', 12, BOLD)) #For the column headers
+s.configure('.', font=('Arial', 11))
 
-nameLabel.grid(row=4, column=0, columnspan=1, padx=20, pady=15)
-crewLabel.grid(row=5, column=0, columnspan=1, padx=20, pady=15)
-hakiLabel.grid(row=6, column=0, columnspan=1, padx=20, pady=15)
-bountyLabel.grid(row=7, column=0, columnspan=1, padx=20, pady=15)
-powerLvlLabel.grid(row=8, column=0, columnspan=1, padx=20, pady=15)
-
-nameEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
-crewEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
-hakiEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
-bountyEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
-powerLvlEntry = Entry(root, width=50, bd=5, font=('Arial', 15))
-
-nameEntry.grid(row=4, column=1, columnspan=1, padx=50, pady=15)
-crewEntry.grid(row=5, column=1, columnspan=1, padx=50, pady=15)
-hakiEntry.grid(row=6, column=1, columnspan=1, padx=50, pady=15)
-bountyEntry.grid(row=7, column=1, columnspan=1, padx=50, pady=15)
-powerLvlEntry.grid(row=8, column=1, columnspan=1, padx=50, pady=15)
-
-addBtn = Button(root, text='Add', font=('Arial', 15, BOLD), padx=20, pady=10)
-delBtn = Button(root, text='Delete', font=('Arial', 15, BOLD), padx=20, pady=10)
-updBtn = Button(root, text='Update', font=('Arial', 15, BOLD), padx=20, pady=10)
-disBtn = Button(root, text='Display Records', font=('Arial', 15, BOLD), padx=20, pady=10)
-
-addBtn.grid(row=4, column=4)
-delBtn.grid(row=5, column=4)
-updBtn.grid(row=6, column=4)
-disBtn.grid(row=7, column=4)
-
-style = ttk.Style()
-style.configure('Treeview.Heading', font=('Arial', BOLD, 15))
-tree['columns'] = ('Char_name', 'pirate_crew', 'df', 'haki_type', 'power_level_desc', 'bounty')
-
-tree.column('#0', width=0, stretch=NO)
-tree.column('Char_name', width=170, anchor=W)
-tree.column('pirate_crew', width=170, anchor=W)
-tree.column('df', width=170, anchor=W)
-tree.column('haki_type', width=170, anchor=W)
-tree.column('power_level_desc', width=170, anchor=W)
-tree.column('bounty', width=170, anchor=W)
-
-tree.heading('Char_name', text='Character Name', anchor=W)
-tree.heading('pirate_crew', text='Crew Name', anchor=W)
-tree.heading('df', text='Devi; Fruit', anchor=W)
-tree.heading('haki_type', text='Haki Type', anchor=W)
-tree.heading('power_level_desc', text='Power Lvl', anchor=W)
-tree.heading('bounty', text='Bounty', anchor=W)
+#define num of columns, must be a tuple
+tree['columns']=('Char_name', 'pirate_crew', 'df', 'haki_type', 'power_level_desc', 'bounty')
 
 
-refreshTable()
+
+
+#assign the width
+#tree.column('char_id', width=40, minwidth=20, anchor=tk.CENTER)
+tree.column('Char_name', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('pirate_crew', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('haki_type', width=140, minwidth=100, anchor=tk.CENTER)
+tree.column('power_level_desc', width=180, minwidth=160, anchor=tk.CENTER)
+#tree.column('faction_id', width=40, minwidth=20, anchor=tk.CENTER)
+#tree.column('crew_id', width=40, minwidth=20, anchor=tk.CENTER)
+#tree.column('age', width=40, minwidth=20, anchor=tk.CENTER)
+#tree.column('loc_num', width=40, minwidth=20, anchor=tk.CENTER)
+tree.column('df', width=180, minwidth=160, anchor=tk.CENTER)
+#tree.column('haki_y_n', width=40, minwidth=20, anchor=tk.CENTER)
+#tree.column('haki_num', width=40, minwidth=20, anchor=tk.CENTER)
+tree.column('bounty', width=180, minwidth=160, anchor=tk.CENTER)
+#tree.column('power_level_id', width=180, minwidth=50, anchor=tk.CENTER)
+
+
+
+
+
+#Assign the heading names to the columns
+tree.heading('Char_name', text='Name', anchor=tk.CENTER)
+tree.heading('pirate_crew', text='Crew Name', anchor=tk.CENTER)
+tree.heading('haki_type', text='Haki Type', anchor=tk.CENTER)
+tree.heading('power_level_desc', text='Power Level', anchor=tk.CENTER)
+tree.heading('df', text='Devil Fruit', anchor=tk.CENTER)
+tree.heading('bounty', text='Bounty', anchor=tk.CENTER)
+
+
+#tree.heading('char_id', text='Character ID', anchor=tk.CENTER)
+#tree.heading('char_name', text='Name', anchor=tk.CENTER)
+#tree.heading('faction_id', text='Faction ID', anchor=tk.CENTER)
+#tree.heading('crew_id', text='Crew ID', anchor=tk.CENTER)
+#tree.heading('age', text='Age', anchor=tk.CENTER)
+#tree.heading('loc_num', text='Location Num', anchor=tk.CENTER)
+#tree.heading('df', text='Devil Fruit Y/N', anchor=tk.CENTER)
+#tree.heading('haki_y_n', text='Haki Y/N', anchor=tk.CENTER)
+#tree.heading('haki_num', text='Haki Num', anchor=tk.CENTER)
+#tree.heading('bounty', text='Bounty', anchor=tk.CENTER)
+#tree.heading('power_level_id', text='Power Level ID', anchor=tk.CENTER)
+
+
+i=0
+for row in mycursor:
+    tree.insert('', i, text='', values=(row[0], row[1], row[2], row[3], row[4], row[5]))
+    i=i+1
+
+#Horizonotal scroll bar
+hsb = ttk.Scrollbar(root, orient='horizontal')
+
+hsb.configure(command=tree.xview)
+tree.configure(xscrollcommand=hsb.set)
+hsb.pack(fill=X, side=BOTTOM)
+
+
+vsb = ttk.Scrollbar(root, orient='vertical')
+
+vsb.configure(command=tree.yview)
+tree.configure(yscrollcommand=vsb.set)
+vsb.pack(fill=Y, side=RIGHT)
+
+#tree.place(x=0, y=100)
+tree.pack(side=BOTTOM)
+
 
 root.mainloop()
