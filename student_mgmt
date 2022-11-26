@@ -5,8 +5,8 @@ from tkinter import font
 from tkinter import messagebox
 from tkinter.font import BOLD
 from tkinter.ttk import Treeview
-from unicodedata import name
 import mysql.connector
+#from unicodedata import name
 
 
 root = Tk()
