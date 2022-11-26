@@ -1,12 +1,43 @@
 from tkinter import *
+from tkinter import messagebox
+import re
 
 
 window = Tk()
-window.geometry('1000x700') #width by height
+window.geometry('1000x800') #width by height
 window.config(background='White')
+regex = re.compile ('[a-zA-Z]')
 
 header = Label(window, text='New Student Form (* - required field)', font=('Arial', 24), background='White')
 header.place(x=260, y=0)
+
+#----------------function setup----------------
+def submit():
+    if first_nameEntry.get() == '' or last_nameEntry.get() == '' or birthdayEntry.get() == '' or phoneEntry.get() == '' or emailEntry.get() == '' or streetEntry.get() == '' or cityEntry.get() == '' or stateEntry.get() =='' or zipcodeEntry =='' or countryEntry.get() == '' or beginYrEntry.get() == '':
+        messagebox.showerror(title='Error', message='Fill in all required fields.')
+    elif regex.search(phoneEntry.get()) != None:
+        messagebox.showerror(title='Error', message='Phone number cannot contain letters.')
+    elif regex.search(zipcodeEntry.get()) != None:
+        messagebox.showerror(title='Error', message='Zipcode cannot contain letters.')
+
+
+def clear():
+    pass
+    first_nameEntry.delete(0, END)
+    last_nameEntry.delete(0, END)
+    birthdayEntry.delete(0, END)
+    phoneEntry.delete(0, END)
+    emailEntry.delete(0, END)
+    streetEntry.delete(0, END)
+    cityEntry.delete(0, END)
+    stateEntry.delete(0, END)
+    zipcodeEntry.delete(0, END)
+    countryEntry.delete(0, END)
+    beginYrEntry.delete(0, END)
+    expGradYrEntry.delete(0, END)
+    majorEntry.delete(0, END)
+    
+
 
 #----------------Left Side labels----------------
 first_nameLabel = Label(window, text='First Name *', font=('Arial', 18), background='White')
@@ -18,7 +49,7 @@ last_nameLabel.place(x=0, y=160)
 birthdayLabel = Label(window, text='Birthdate *', font=('Arial', 18), background='White')
 birthdayLabel.place(x=0, y=240)
 
-phoneLabel = Label(window, text='Phone', font=('Arial', 18), background='White')
+phoneLabel = Label(window, text='Phone *', font=('Arial', 18), background='White')
 phoneLabel.place(x=0, y=320)
 
 emailLabel = Label(window, text='Email *', font=('Arial', 18), background='White')
@@ -26,6 +57,9 @@ emailLabel.place(x=0, y=400)
 
 streetAddrLabel = Label(window, text='Street Address *', font=('Arial', 18), background='White')
 streetAddrLabel.place(x=0, y=480)
+
+zipcodeLabel = Label(window, text='Zipcode *', font=('Arial', 18), background='White')
+zipcodeLabel.place(x=0, y=560)
 
 #----------------Left Side entry----------------
 first_nameEntry = Entry(window, font=('Arial', 18), bd=2)
@@ -46,6 +80,8 @@ emailEntry.place(x=160, y=400)
 streetEntry = Entry(window, font=('Arial', 18), bd=2)
 streetEntry.place(x=210, y=480)
 
+zipcodeEntry = Entry(window, font=('Arial', 18), bd=2)
+zipcodeEntry.place(x=160, y=560)
 
 #----------------Right Side labels----------------
 cityLabel = Label(window, text='City *', font=('Arial', 18), background='White')
@@ -70,7 +106,7 @@ majorLabel.place(x=500, y=480)
 cityEntry = Entry(window, font=('Arial', 18), bd=2)
 cityEntry.place(x=580, y=80)
 
-stateEntry = Entry(window, font=('Arial', 18), bd=2)
+stateEntry = Entry(window, font=('Arial', 18), bd=2, width=2)
 stateEntry.place(x=600, y=160)
 
 countryEntry = Entry(window, font=('Arial', 18), bd=2)
@@ -86,10 +122,10 @@ majorEntry = Entry(window, font=('Arial', 18), bd=2)
 majorEntry.place(x=580, y=480)
 
 #----------------Button widgets----------------
-submitBtn = Button(window, text='Submit', font=('Arial', 18), bd=5, padx=5, pady=5)
-submitBtn.place(x=320, y=580)
+submitBtn = Button(window, text='Submit', font=('Arial', 18), bd=5, padx=5, pady=5, command=submit)
+submitBtn.place(x=320, y=680)
 
-clearBtn = Button(window, text='Clear', font=('Arial', 18), bd=5, padx=5, pady=5)
-clearBtn.place(x=500, y=580)
+clearBtn = Button(window, text='Clear', font=('Arial', 18), bd=5, padx=5, pady=5, command=clear)
+clearBtn.place(x=500, y=680)
 
 window.mainloop()
