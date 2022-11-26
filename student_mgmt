@@ -81,65 +81,71 @@ def update():
 
 
 #-------------------widget section for labels------------------------
-header = Label(root, text='Student Management Portal', font=('Arial', 24, BOLD), background='#faef20')
+header = Label(root, text='Student Management Portal', font=('Arial', 24, BOLD), background='white')
 header.place(x=550, y=0)
 
 #'first_name', 'last_name', 'birthdate', 'phone', 'email', 'street_addr', 'city', 'state', 'country', 'begin_year', 'expected_grad_yr', 'major'
 
+studentID = Label(root, text='Student ID *', font=('Arial', 16, BOLD), background='White')
+studentID.place(x=0, y=70)
+
 firstName = Label(root, text='First Name', font=('Arial', 16, BOLD), background='White')
-firstName.place(x=0, y=100)
+firstName.place(x=0, y=130)
 
 lastName = Label(root, text='Last Name', font=('Arial', 16, BOLD), background='White')
-lastName.place(x=0, y=160)
+lastName.place(x=0, y=190)
 
 birthdayLabel = Label(root, text='Birthday', font=('Arial', 16, BOLD), background='White')
-birthdayLabel.place(x=0, y=220)
+birthdayLabel.place(x=0, y=250)
 
 phoneLabel = Label(root, text='Phone', font=('Arial', 16, BOLD), background='White')
-phoneLabel.place(x=0, y=280)
+phoneLabel.place(x=0, y=310)
 
 emailLabel = Label(root, text='Email', font=('Arial', 16, BOLD), background='White')
-emailLabel.place(x=0, y=340)
+emailLabel.place(x=0, y=370)
 
 addrLabel = Label(root, text='Street addr', font=('Arial', 16, BOLD), background='White')
-addrLabel.place(x=0, y=400)
+addrLabel.place(x=0, y=430)
 
 
 #-------------------widget section for entry boxes------------------------
-firstnameEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
-firstnameEntry.place(x=220, y=100)
+student_ID_Entry = Entry(root, font=('Arial', 16), width=85, bd=5)
+student_ID_Entry.place(x=220, y=70)
 
-lastnameEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
-lastnameEntry.place(x=220, y=160)
+firstnameEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
+firstnameEntry.place(x=220, y=130)
 
-birthdate_entry = Entry(root, font=('Arial', 16), width=80, bd=5)
-birthdate_entry.place(x=220, y=220)
+lastnameEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
+lastnameEntry.place(x=220, y=190)
 
-phoneEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
-phoneEntry.place(x=220, y=280)
+birthdate_entry = Entry(root, font=('Arial', 16), width=85, bd=5)
+birthdate_entry.place(x=220, y=250)
 
-emailEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
-emailEntry.place(x=220, y=340)
+phoneEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
+phoneEntry.place(x=220, y=310)
 
-addrEntry = Entry(root, font=('Arial', 16), width=80, bd=5)
-addrEntry.place(x=220, y=400)
+emailEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
+emailEntry.place(x=220, y=370)
+
+addrEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
+addrEntry.place(x=220, y=430)
 
 
 #-------------------widget section for buttons------------------------
 displayBtn = Button(root, text='Display All', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
-displayBtn.place(x=0, y=480)
+displayBtn.place(x=10, y=500)
 
-addBtn = Button(root, text='Add', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20, command=add)
-addBtn.place(x=180, y=480)
+addBtn = Button(root, text='Add Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20, command=add)
+addBtn.place(x=190, y=500)
 
-deleteBtn = Button(root, text='Delete', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
-deleteBtn.place(x=300, y=480)
+deleteBtn = Button(root, text='Delete Student', font=('Arial', 16, BOLD), background='#ed2630', activebackground='#ed2630', padx=20)
+deleteBtn.place(x=390, y=500)
 
-updateBtn = Button(root, text='Update', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
-updateBtn.place(x=440, y=480)
+updateBtn = Button(root, text='Update Record', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
+updateBtn.place(x=610, y=500)
 
 searchBtn = Button(root, text='Search', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
-searchBtn.place(x=590, y=480)
+searchBtn.place(x=830, y=500)
 
 
 tree = Treeview(root)
