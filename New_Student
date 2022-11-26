@@ -1,0 +1,95 @@
+from tkinter import *
+
+
+window = Tk()
+window.geometry('1000x700') #width by height
+window.config(background='White')
+
+header = Label(window, text='New Student Form (* - required field)', font=('Arial', 24), background='White')
+header.place(x=260, y=0)
+
+#----------------Left Side labels----------------
+first_nameLabel = Label(window, text='First Name *', font=('Arial', 18), background='White')
+first_nameLabel.place(x=0, y=80)
+
+last_nameLabel = Label(window, text='Last Name *', font=('Arial', 18), background='White')
+last_nameLabel.place(x=0, y=160)
+
+birthdayLabel = Label(window, text='Birthdate *', font=('Arial', 18), background='White')
+birthdayLabel.place(x=0, y=240)
+
+phoneLabel = Label(window, text='Phone', font=('Arial', 18), background='White')
+phoneLabel.place(x=0, y=320)
+
+emailLabel = Label(window, text='Email *', font=('Arial', 18), background='White')
+emailLabel.place(x=0, y=400)
+
+streetAddrLabel = Label(window, text='Street Address *', font=('Arial', 18), background='White')
+streetAddrLabel.place(x=0, y=480)
+
+#----------------Left Side entry----------------
+first_nameEntry = Entry(window, font=('Arial', 18), bd=2)
+first_nameEntry.place(x=160, y=80)
+
+last_nameEntry = Entry(window, font=('Arial', 18), bd=2)
+last_nameEntry.place(x=160, y=160)
+
+birthdayEntry = Entry(window, font=('Arial', 18), bd=2)
+birthdayEntry.place(x=160, y=240)
+
+phoneEntry = Entry(window, font=('Arial', 18), bd=2)
+phoneEntry.place(x=160, y=320)
+
+emailEntry = Entry(window, font=('Arial', 18), bd=2)
+emailEntry.place(x=160, y=400)
+
+streetEntry = Entry(window, font=('Arial', 18), bd=2)
+streetEntry.place(x=210, y=480)
+
+
+#----------------Right Side labels----------------
+cityLabel = Label(window, text='City *', font=('Arial', 18), background='White')
+cityLabel.place(x=500, y=80)
+
+stateLabel = Label(window, text='State *', font=('Arial', 18), background='White')
+stateLabel.place(x=500, y=160)
+
+countryLabel = Label(window, text='Country *', font=('Arial', 18), background='White')
+countryLabel.place(x=500, y=240)
+
+beginYrLabel = Label(window, text='Starting Yr *', font=('Arial', 18), background='White')
+beginYrLabel.place(x=500, y=320)
+
+expGradYrLabel = Label(window, text='Exp Grad Yr', font=('Arial', 18), background='White')
+expGradYrLabel.place(x=500, y=400)
+
+majorLabel = Label(window, text='Major', font=('Arial', 18), background='White')
+majorLabel.place(x=500, y=480)
+
+#----------------Right Side entry----------------
+cityEntry = Entry(window, font=('Arial', 18), bd=2)
+cityEntry.place(x=580, y=80)
+
+stateEntry = Entry(window, font=('Arial', 18), bd=2)
+stateEntry.place(x=600, y=160)
+
+countryEntry = Entry(window, font=('Arial', 18), bd=2)
+countryEntry.place(x=620, y=240)
+
+beginYrEntry = Entry(window, font=('Arial', 18), bd=2)
+beginYrEntry.place(x=650, y=320)
+
+expGradYrEntry = Entry(window, font=('Arial', 18), bd=2)
+expGradYrEntry.place(x=650, y=400)
+
+majorEntry = Entry(window, font=('Arial', 18), bd=2)
+majorEntry.place(x=580, y=480)
+
+#----------------Button widgets----------------
+submitBtn = Button(window, text='Submit', font=('Arial', 18), bd=5, padx=5, pady=5)
+submitBtn.place(x=320, y=580)
+
+clearBtn = Button(window, text='Clear', font=('Arial', 18), bd=5, padx=5, pady=5)
+clearBtn.place(x=500, y=580)
+
+window.mainloop()
