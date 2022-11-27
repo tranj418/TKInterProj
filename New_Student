@@ -8,10 +8,20 @@ window.geometry('1000x800') #width by height
 window.config(background='White')
 regex = re.compile ('[a-zA-Z]')
 
+#countries = ['USA', 'India', 'Canada', 'France', 'Mexico']
+#options = StringVar()
+#options.set('Select a country')
+#choice = StringVar()
+#choice.set(countries[4])
+
 header = Label(window, text='New Student Form (* - required field)', font=('Arial', 24), background='White')
 header.place(x=260, y=0)
 
 #----------------function setup----------------
+#def print(selection):
+#    selection = choice.get()
+#    print(selection)
+
 def submit():
     if first_nameEntry.get() == '' or last_nameEntry.get() == '' or birthdayEntry.get() == '' or phoneEntry.get() == '' or emailEntry.get() == '' or streetEntry.get() == '' or cityEntry.get() == '' or stateEntry.get() =='' or zipcodeEntry =='' or countryEntry.get() == '' or beginYrEntry.get() == '':
         messagebox.showerror(title='Error', message='Fill in all required fields.')
@@ -19,6 +29,8 @@ def submit():
         messagebox.showerror(title='Error', message='Phone number cannot contain letters.')
     elif regex.search(zipcodeEntry.get()) != None:
         messagebox.showerror(title='Error', message='Zipcode cannot contain letters.')
+    elif len(stateEntry.get()) > 2:
+        messagebox.showerror(title='Error', message='State entry example - MI, AZ, NY, IL')
 
 
 def clear():
@@ -109,6 +121,9 @@ cityEntry.place(x=580, y=80)
 stateEntry = Entry(window, font=('Arial', 18), bd=2, width=2)
 stateEntry.place(x=600, y=160)
 
+#countryOpt = OptionMenu(window, options, 'USA', 'India', 'Canada', 'France', 'Mexico', command=print)
+#countryOpt.place(x=620, y=240)
+
 countryEntry = Entry(window, font=('Arial', 18), bd=2)
 countryEntry.place(x=620, y=240)
 
@@ -127,5 +142,8 @@ submitBtn.place(x=320, y=680)
 
 clearBtn = Button(window, text='Clear', font=('Arial', 18), bd=5, padx=5, pady=5, command=clear)
 clearBtn.place(x=500, y=680)
+
+#countryOpt = OptionMenu(window, options, 'USA', 'India', 'Canada', 'France', 'Mexico', command=print)
+#countryOpt.place(x=620, y=680)
 
 window.mainloop()
