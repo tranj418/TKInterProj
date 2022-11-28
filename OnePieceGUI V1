@@ -157,35 +157,39 @@ s.configure('Treeview.Heading', foreground='red', font=('Helvetica', 12, BOLD)) 
 s.configure('.', font=('Arial', 11))
 
 #define num of columns, must be a tuple
-tree['columns']=('Char_name', 'pirate_crew', 'df', 'haki_type', 'power_level_desc', 'bounty')
-
+tree['columns']=('char_name', 'faction', 'crew_name', 'age', 'df', 'haki_type', 'bounty', 'power_level_desc')
+# 'char_name', 'faction', 'crew_name', 'age', 'df', 'haki_type', 'bounty', 'power_level_desc'
 
 
 
 #assign the width
-tree.column('Char_name', width=180, minwidth=160, anchor=tk.CENTER)
-tree.column('pirate_crew', width=180, minwidth=160, anchor=tk.CENTER)
-tree.column('haki_type', width=140, minwidth=100, anchor=tk.CENTER)
-tree.column('power_level_desc', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('char_name', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('faction', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('crew_name', width=140, minwidth=100, anchor=tk.CENTER)
+tree.column('age', width=60, anchor=tk.CENTER)
 tree.column('df', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('haki_type', width=180, minwidth=160, anchor=tk.CENTER)
 tree.column('bounty', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('power_level_desc', width=180, minwidth=160, anchor=tk.CENTER)
 
 
 
 
 
 #Assign the heading names to the columns
-tree.heading('Char_name', text='Name', anchor=tk.CENTER)
-tree.heading('pirate_crew', text='Crew Name', anchor=tk.CENTER)
-tree.heading('haki_type', text='Haki Type', anchor=tk.CENTER)
-tree.heading('power_level_desc', text='Power Level', anchor=tk.CENTER)
+tree.heading('char_name', text='Name', anchor=tk.CENTER)
+tree.heading('faction', text='Faction', anchor=tk.CENTER)
+tree.heading('crew_name', text='Crew Name', anchor=tk.CENTER)
+tree.heading('age', text='Age', anchor=tk.CENTER)
 tree.heading('df', text='Devil Fruit', anchor=tk.CENTER)
+tree.heading('haki_type', text='Haki Type', anchor=tk.CENTER)
 tree.heading('bounty', text='Bounty', anchor=tk.CENTER)
+tree.heading('power_level_desc', text='Power Level', anchor=tk.CENTER)
 
 
 i=0
 for row in mycursor:
-    tree.insert('', i, text='', values=(row[0], row[1], row[2], row[3], row[4], row[5]))
+    tree.insert('', i, text='', values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
     i=i+1
 
 #Horizonotal scroll bar
