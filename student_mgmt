@@ -48,7 +48,7 @@ def add():
                 database='student_mgmt',
                 autocommit=True)
             mycursor= mydb.cursor()
-            messagebox.showinfo(title='Success', message='Connected to One Piece DB successfully')
+            messagebox.showinfo(title='Success', message='Connected to Student Management DB successfully')
         except:
             messagebox.showerror(title='Error', message='Cannot connect to DB, examine MySQL connection')
 
@@ -159,22 +159,22 @@ s.configure('Treeview.Heading', foreground='red', font=('Helvetica', 12, BOLD)) 
 s.configure('.', font=('Arial', 11))
 
 #define num of columns, must be a tuple
-tree['columns']=('first_name', 'last_name', 'birthdate', 'phone', 'email', 'street_addr', 'city', 'zipcode', 'state', 'country', 'begin_year', 'expected_grad_year', 'major')
+tree['columns']=('student_id', 'first_name', 'last_name', 'birthdate', 'phone', 'email', 'street_addr', 'city', 'zipcode', 'state', 'begin_year', 'expected_grad_year', 'major')
 
 
 
 
 #assign the width
-tree.column('first_name', width=180, minwidth=160, anchor=tk.CENTER)
-tree.column('last_name', width=180, minwidth=160, anchor=tk.CENTER)
-tree.column('birthdate', width=140, minwidth=100, anchor=tk.CENTER)
-tree.column('phone', width=180, minwidth=160, anchor=tk.CENTER)
-tree.column('email', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('student_id', width=120, anchor=tk.CENTER)
+tree.column('first_name', width=120, anchor=tk.CENTER)
+tree.column('last_name', width=120, anchor=tk.CENTER)
+tree.column('birthdate', width=120, anchor=tk.CENTER)
+tree.column('phone', width=150, anchor=tk.CENTER)
+tree.column('email', width=150, anchor=tk.CENTER)
 tree.column('street_addr', width=180, minwidth=160, anchor=tk.CENTER)
-tree.column('city', width=180, minwidth=160, anchor=tk.CENTER)
+tree.column('city', width=150, anchor=tk.CENTER)
 tree.column('zipcode', width=180, minwidth=160, anchor=tk.CENTER)
 tree.column('state', width=180, minwidth=160, anchor=tk.CENTER)
-tree.column('country', width=180, minwidth=160, anchor=tk.CENTER)
 tree.column('begin_year', width=180, minwidth=160, anchor=tk.CENTER)
 tree.column('expected_grad_year', width=180, minwidth=160, anchor=tk.CENTER)
 tree.column('major', width=180, minwidth=160, anchor=tk.CENTER)
@@ -184,6 +184,7 @@ tree.column('major', width=180, minwidth=160, anchor=tk.CENTER)
 
 
 #Assign the heading names to the columns
+tree.heading('student_id', text='Student Id', anchor=tk.CENTER)
 tree.heading('first_name', text='First name', anchor=tk.CENTER)
 tree.heading('last_name', text='Last Name', anchor=tk.CENTER)
 tree.heading('birthdate', text='Birthday', anchor=tk.CENTER)
@@ -193,7 +194,6 @@ tree.heading('street_addr', text='Street Address', anchor=tk.CENTER)
 tree.heading('city', text='City', anchor=tk.CENTER)
 tree.heading('zipcode', text='Zipcode', anchor=tk.CENTER)
 tree.heading('state', text='State', anchor=tk.CENTER)
-tree.heading('country', text='Country', anchor=tk.CENTER)
 tree.heading('begin_year', text='Beginning Yr', anchor=tk.CENTER)
 tree.heading('expected_grad_year', text='Exp Grad Yr', anchor=tk.CENTER)
 tree.heading('major', text='Major', anchor=tk.CENTER)
@@ -201,7 +201,7 @@ tree.heading('major', text='Major', anchor=tk.CENTER)
 
 i=0
 for row in mycursor:
-    tree.insert('', i, text='', values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11]))
+    tree.insert('', i, text='', values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12]))
     i=i+1
 
 #Horizonotal scroll bar
