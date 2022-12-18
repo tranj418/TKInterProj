@@ -1,0 +1,279 @@
+from tkinter import *
+from tkinter.font import BOLD
+from tkinter import messagebox
+import mysql.connector
+
+
+root = Tk()
+root.geometry('850x500')
+root.config(background='white')
+
+
+#-------------------Section for functions------------------------#
+
+def clearFields():
+    firstNameEntry.delete(0, END)
+    lastNameEntry.delete(0, END)
+    birthEntry.delete(0, END)
+    phoneEntry.delete(0, END)
+    emailEntry.delete(0, END)
+    streetEntry.delete(0, END)
+    cityEntry.delete(0, END)
+    zipCodeEntry.delete(0, END)
+    stateEntry.delete(0, END)
+    beginYrEntry.delete(0, END)
+    expGradYrEntry.delete(0, END)
+    majorEntry.delete(0, END)
+
+
+def submitRecord():
+
+    firstName = firstNameEntry.get()
+    lastName = lastNameEntry.get()
+    birthDate = birthEntry.get()
+    phoneNum = phoneEntry.get() 
+    email = emailEntry.get()
+    streetAddress = streetEntry.get()
+    city = cityEntry.get()
+    zipcode = zipCodeEntry.get()
+    state = stateEntry.get()
+    beginYr = beginYrEntry.get() 
+    expGradYr = expGradYrEntry.get() 
+    major = majorEntry.get()
+
+    firstNameEntry.get(), lastNameEntry.get(), birthEntry.get(), phoneEntry.get(), emailEntry.get(), streetEntry.get(), cityEntry.get(), zipCodeEntry.get(), stateEntry.get(), beginYrEntry.get(), expGradYrEntry.get(), majorEntry.get()
+
+    if firstName == '' and lastName == '' and birthDate == '' and email == '' and streetAddress == '' and city == '' and zipcode == '' and state == '':
+        messagebox.showerror(title='Error', message='Please fill out all required fields (*)')
+    elif  len(zipcode) != 5:
+        messagebox.showerror(title='Error', message='Zipcode length is 5 numbers.')
+    elif len(state) != 2:
+        messagebox.showerror(title='error', message='Enter state as two letters, ex: MI, NY, TX')
+    else:
+        try:
+            mydb=mysql.connector.connect(
+            host= "127.0.0.1",
+            user= "root",
+            password= "2193ECAstle!!",
+            database='student_mgmt',
+            autocommit=True)
+            mycursor= mydb.cursor()
+            print('Connected to database: USERDB - successfully')
+        except:
+            print('Connectivity Issues')
+
+
+        insertQuery= """insert into student_card (first_name, last_name, birthdate, phone, email, street_addr, city, zipcode, state, begin_year, expected_grad_yr, major) 
+                            values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        mycursor.execute(insertQuery, (firstNameEntry.get(), lastNameEntry.get(), birthEntry.get(), phoneEntry.get(), emailEntry.get(), streetEntry.get(), cityEntry.get(), zipCodeEntry.get(), stateEntry.get(), beginYrEntry.get(), expGradYrEntry.get(), majorEntry.get()))
+        mycursor.close()
+        messagebox.showinfo(title='Success', message='Student successfully created!')
+        clearFields()
+
+
+
+
+
+
+#first_name, last_name, birthdate, //phone, email, street_addr
+#-------------------widget section for labels // LEFT SIDE------------------------#
+addStudentHead = Label(root, 
+                    text='New Student Form', 
+                    font=('Arial', 24, BOLD),
+                    background='white')
+addStudentHead.place(x=180, y=10)
+
+
+firstNameLabel = Label(root, 
+                    text='First Name', 
+                    font=('Arial', 16, BOLD),
+                    background='white')
+firstNameLabel.place(x=0, y=100)
+
+
+lastNameLabel = Label(root, 
+                    text='Last Name', 
+                    font=('Arial', 16, BOLD),
+                    background='white')
+lastNameLabel.place(x=0, y=150)
+
+
+birthLabel = Label(root, 
+                text='Birthdate (YYYY/DD/MM)', 
+                font=('Arial', 16, BOLD), 
+                background='white')
+birthLabel.place(x=0, y=200)
+
+phoneLabel = Label(root, 
+                text='Phone #', 
+                font=('Arial', 16, BOLD), 
+                background='white')
+phoneLabel.place(x=0, y=250)
+
+
+emailLabel = Label(root, 
+                text='Email', 
+                font=('Arial', 16, BOLD), 
+                background='white')
+emailLabel.place(x=0, y=300)
+
+
+streetLabel = Label(root, 
+            text='Street Addr', 
+            font=('Arial', 16, BOLD), 
+            background='White')
+streetLabel.place(x=0, y=350)
+
+
+
+#city, zipcode, state, begin_year, //expected_grad_yr, //major
+#-------------------widget section for labels // RIGHT SIDE------------------------#
+cityLabel = Label(root, 
+            text='City', 
+            font=('Arial', 16, BOLD), 
+            background='white')
+cityLabel.place(x=500,y=100)
+
+
+zipCodeLabel = Label(root, 
+            text='Zipcode', 
+            font=('Arial', 16, BOLD), 
+            background='white')
+zipCodeLabel.place(x=500,y=150)
+
+
+stateLabel = Label(root, 
+            text='State', 
+            font=('Arial', 16, BOLD), 
+            background='white')
+stateLabel.place(x=500,y=200)
+
+
+beginYrLabel = Label(root, 
+            text='Starting Yr', 
+            font=('Arial', 16, BOLD), 
+            background='white')
+beginYrLabel.place(x=500,y=250)
+
+
+expGradYrLabel = Label(root, 
+            text='Exp Graduation Yr', 
+            font=('Arial', 16, BOLD), 
+            background='white')
+expGradYrLabel.place(x=500,y=300)
+
+
+majorLabel = Label(root, 
+            text='Major', 
+            font=('Arial', 16, BOLD), 
+            background='white')
+majorLabel.place(x=500,y=350)
+
+#---------------------Widget for entry boxes // LEFT SIDE-----------------------#
+
+firstNameEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=30,
+                bd=5)
+firstNameEntry.place(x=145, y=105)
+
+
+lastNameEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=30,
+                bd=5)
+lastNameEntry.place(x=145, y=155)
+
+
+birthEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=10,
+                bd=5)
+birthEntry.place(x=270, y=205)
+
+
+phoneEntry = Entry(root, 
+            font=('Arial', 12), 
+            width=30,
+            bd=5)
+phoneEntry.place(x=145, y=255)
+
+
+emailEntry = Entry(root, 
+            font=('Arial', 12), 
+            width=30,
+            bd=5)
+emailEntry.place(x=145, y=305)
+
+
+streetEntry = Entry(root, 
+            font=('Arial', 12), 
+            width=30,
+            bd=5)
+streetEntry.place(x=145, y=355)
+
+
+
+#---------------------Widget for entry boxes // RIGHT SIDE-----------------------#
+
+cityEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=25,
+                bd=5)
+cityEntry.place(x=600, y=105)
+
+
+zipCodeEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=10,
+                bd=5)
+zipCodeEntry.place(x=735, y=155)
+
+
+stateEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=10,
+                bd=5)
+stateEntry.place(x=735, y=205)
+
+
+beginYrEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=5,
+                bd=5)
+beginYrEntry.place(x=775, y=255)
+
+
+expGradYrEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=5,
+                bd=5)
+expGradYrEntry.place(x=775, y=305)
+
+
+majorEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=10,
+                bd=5)
+majorEntry.place(x=735, y=355)
+
+
+
+#------------------Widget section for buttons------------------#
+
+SubmitBtn = Button(root, 
+                text='Submit', 
+                font=('Arial', 16, BOLD), 
+                width=10,
+                command=submitRecord)
+SubmitBtn.place(x=220,y=420)
+
+
+clearBtn = Button(root, 
+                text='Clear Form', 
+                font=('Arial', 16, BOLD), 
+                width=10,
+                command=clearFields)
+clearBtn.place(x=470,y=420)
+
+root.mainloop()
