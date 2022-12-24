@@ -6,11 +6,10 @@ from tkinter import messagebox
 from tkinter.font import BOLD
 from tkinter.ttk import Treeview
 import mysql.connector
-#from unicodedata import name
 
 
 root = Tk()
-root.geometry('1000x800') #width x heigh
+root.geometry('1000x800') #width x height
 root.config(background='White')
 
 mydb=mysql.connector.connect(
