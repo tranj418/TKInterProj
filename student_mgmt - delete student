@@ -1,0 +1,120 @@
+from tkinter import *
+from tkinter.font import BOLD
+from tkinter import messagebox
+import mysql.connector
+
+
+root = Tk()
+root.geometry('550x400')
+root.config(background='white')
+
+
+#-------------------Section for functions------------------------#
+
+def clearFields():
+    studentIDEntry.delete(0, END)
+    firstNameEntry.delete(0, END)
+    lastNameEntry.delete(0, END)
+
+
+
+def submitRecord():
+
+    studentID = studentIDEntry.get()
+    firstName = firstNameEntry.get()
+    lastName = lastNameEntry.get()
+    
+
+    if studentID == '' and firstName == '' and lastName == '':
+        messagebox.showerror(title='Error', message='Please fill out all fields')
+
+    else:
+        try:
+            mydb=mysql.connector.connect(
+            host= "127.0.0.1",
+            user= "root",
+            password= "2193ECAstle!!",
+            database='student_mgmt',
+            autocommit=True)
+            mycursor= mydb.cursor()
+            print('Connected to database: USERDB - successfully')
+        except:
+            print('Connectivity Issues')
+
+
+        deleteQuery= """delete from student_card where student_id = %s and first_name = %s and last_name = %s"""
+        mycursor.execute(deleteQuery, (studentIDEntry.get(), firstNameEntry.get(), lastNameEntry.get()))
+        mycursor.close()
+        messagebox.showinfo(title='Success', message='Student record deleted!')
+        clearFields()
+
+
+
+
+#-------------------widget section for labels // LEFT SIDE------------------------#
+delStudentLabel = Label(root, 
+                    text='Delete Student Record', 
+                    font=('Arial', 16, BOLD),
+                    background='white')
+delStudentLabel.place(x=140, y=10)
+
+studentIDLabel = Label(root,
+                    text='Student ID',
+                    font=('Arial', 12, BOLD),
+                    background='white')
+studentIDLabel.place(x=0, y=100)
+
+firstNameLabel = Label(root, 
+                    text='First Name', 
+                    font=('Arial', 12, BOLD),
+                    background='white')
+firstNameLabel.place(x=0, y=150)
+
+
+lastNameLabel = Label(root, 
+                    text='Last Name', 
+                    font=('Arial', 12, BOLD),
+                    background='white')
+lastNameLabel.place(x=0, y=200)
+
+
+#---------------------Widget for entry boxes // LEFT SIDE-----------------------#
+
+studentIDEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=5,
+                bd=5)
+studentIDEntry.place(x=145, y=105)
+
+firstNameEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=30,
+                bd=5)
+firstNameEntry.place(x=145, y=155)
+
+
+lastNameEntry = Entry(root, 
+                font=('Arial', 12), 
+                width=30,
+                bd=5)
+lastNameEntry.place(x=145, y=205)
+
+
+#------------------Widget section for buttons------------------#
+
+SubmitBtn = Button(root, 
+                text='Submit', 
+                font=('Arial', 12, BOLD), 
+                width=10,
+                command=submitRecord)
+SubmitBtn.place(x=120,y=300)
+
+
+clearBtn = Button(root, 
+                text='Clear Form', 
+                font=('Arial', 12, BOLD), 
+                width=10,
+                command=clearFields)
+clearBtn.place(x=270,y=300)
+
+root.mainloop()
