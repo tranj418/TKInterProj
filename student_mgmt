@@ -10,7 +10,7 @@ import mysql.connector
 
 
 root = Tk()
-root.geometry('1400x800') #width x heigh
+root.geometry('1000x800') #width x heigh
 root.config(background='White')
 
 mydb=mysql.connector.connect(
@@ -22,24 +22,124 @@ mydb=mysql.connector.connect(
 mycursor= mydb.cursor()
 
 query = 'select * from student_card'
-mycursor.execute(query)
-
+mycursor.execute(query) 
 
 #-------------------function section------------------------
-def display():
-    try:
-        mydb=mysql.connector.connect(
+def selectRecord():
+    student_ID_Entry.delete(0, END)
+    firstnameEntry.delete(0, END), 
+    lastnameEntry.delete(0, END), 
+    birthdate_entry.delete(0, END), 
+    phoneEntry.delete(0, END), 
+    emailEntry.delete(0, END), 
+    addrEntry.delete(0, END), 
+    cityEntry.delete(0, END), 
+    zipcodeEntry.delete(0, END), 
+    stateEntry.delete(0, END), 
+    beginYrEntry.delete(0, END), 
+    expGradYrEntry.delete(0, END), 
+    majorEntry.delete(0, END)
+
+    selected = tree.focus()
+    values = tree.item(selected, 'values')
+
+    student_ID_Entry.insert(0, values[0])
+    firstnameEntry.insert(0, values[1])
+    lastnameEntry.insert(0, values[2])
+    birthdate_entry.insert(0, values[3])
+    phoneEntry.insert(0, values[4])
+    emailEntry.insert(0, values[5])
+    addrEntry.insert(0, values[6])
+    cityEntry.insert(0, values[7])
+    zipcodeEntry.insert(0, values[8])
+    stateEntry.insert(0, values[9])
+    beginYrEntry.insert(0, values[10])
+    expGradYrEntry.insert(0, values[11])
+    majorEntry.insert(0, values[12])
+
+
+def clearRecord():
+    student_ID_Entry.delete(0, END)
+    firstnameEntry.delete(0, END), 
+    lastnameEntry.delete(0, END), 
+    birthdate_entry.delete(0, END), 
+    phoneEntry.delete(0, END), 
+    emailEntry.delete(0, END), 
+    addrEntry.delete(0, END), 
+    cityEntry.delete(0, END), 
+    zipcodeEntry.delete(0, END), 
+    stateEntry.delete(0, END), 
+    beginYrEntry.delete(0, END), 
+    expGradYrEntry.delete(0, END), 
+    majorEntry.delete(0, END)
+
+
+def add():
+
+    firstName = firstnameEntry.get()
+    lastName = lastnameEntry.get()
+    birthDate = birthdate_entry.get()
+    phoneNum = phoneEntry.get() 
+    email = emailEntry.get()
+    streetAddress = addrEntry.get()
+    city = cityEntry.get()
+    zipcode = zipcodeEntry.get()
+    state = stateEntry.get()
+    beginYr = beginYrEntry.get() 
+    expGradYr = expGradYrEntry.get() 
+    major = majorEntry.get()
+
+    if studentID != '':
+        messagebox.showerror(title='Error', message='Please leave student ID blank, it will be auto generated.')
+    elif firstName == '' and lastName == '' and birthDate == '' and phoneNum =='' and email == '' and streetAddress == '' and city == '' and zipcode == '' and state == '' and major =='':
+        messagebox.showerror(title='Error', message='Please fill out all fields')
+    elif  len(zipcode) != 5:
+        messagebox.showerror(title='Error', message='Zipcode length is 5 numbers.')
+    elif len(state) != 2:
+        messagebox.showerror(title='error', message='Enter state as two letters, ex: MI, NY, TX')
+    elif  len(beginYr) != 4 or len(expGradYr != 4):
+        messagebox.showerror(title='Error', message='Example of begin/exp yrs 2010, 2018, 2020')
+    else:
+        try:
+            mydb=mysql.connector.connect(
             host= "127.0.0.1",
             user= "root",
             password= "2193ECAstle!!",
             database='student_mgmt',
             autocommit=True)
-        mycursor= mydb.cursor()
-        messagebox.showinfo(title='Success', message='Connected to One Piece DB successfully')
-    except:
-        messagebox.showerror(title='Error', message='Cannot connect to DB, examine MySQL connection')
+            mycursor= mydb.cursor()
+            print('Connected to Student Mgmt DB successfully')
+        except:
+            print('Connectivity Issues')
 
-def add():
+
+        insertQuery= """insert into student_card (first_name, last_name, birthdate, phone, email, street_addr, city, zipcode, state, begin_year, expected_grad_yr, major) 
+                            values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        mycursor.execute(insertQuery, (firstnameEntry.get(), lastnameEntry.get(), birthdate_entry.get(), phoneEntry.get(), emailEntry.get(), addrEntry.get(), cityEntry.get(), zipcodeEntry.get(), stateEntry.get(), beginYrEntry.get(), expGradYrEntry.get(), majorEntry.get()))
+        mycursor.close()
+        messagebox.showinfo(title='Success', message='Student successfully created!')
+        
+        clearRecord()
+
+
+def deleteRecord():
+    studentID = student_ID_Entry.get()
+    firstName = firstnameEntry.get()
+    lastName = lastnameEntry.get()
+    birthDate = birthdate_entry.get()
+    phoneNum = phoneEntry.get() 
+    email = emailEntry.get()
+    streetAddress = addrEntry.get()
+    city = cityEntry.get()
+    zipcode = zipcodeEntry.get()
+    state = stateEntry.get()
+    beginYr = beginYrEntry.get() 
+    expGradYr = expGradYrEntry.get() 
+    major = majorEntry.get()
+
+    if studentID == '' and firstName == '' and lastName == '' and birthDate == '' and phoneNum =='' and email == '' and streetAddress == '' and city == '' and zipcode == '' and state == '' and beginYr =='' and expGradYr =='' and major =='':
+        messagebox.showerror(title='Error', message='Double-click on a record below.')
+    else:
         try:
             mydb=mysql.connector.connect(
                 host= "127.0.0.1",
@@ -48,24 +148,23 @@ def add():
                 database='student_mgmt',
                 autocommit=True)
             mycursor= mydb.cursor()
-            messagebox.showinfo(title='Success', message='Connected to Student Management DB successfully')
+            print('Connected to Student Mgmt DB successfully')
         except:
             messagebox.showerror(title='Error', message='Cannot connect to DB, examine MySQL connection')
 
-def delete():
-    try:
-        mydb=mysql.connector.connect(
-            host= "127.0.0.1",
-            user= "root",
-            password= "2193ECAstle!!",
-            database='student_mgmt',
-            autocommit=True)
-        mycursor= mydb.cursor()
-        messagebox.showinfo(title='Success', message='Connected to One Piece DB successfully')
-    except:
-        messagebox.showerror(title='Error', message='Cannot connect to DB, examine MySQL connection')
+        sID = [student_ID_Entry.get()]
+        deleteQuery= """delete from student_card where student_id = %s"""
+        mycursor.execute(deleteQuery, sID)
+        messagebox.showinfo(title='Success', message='Student record deleted')
+
+        clearRecord()
+
+def clicker(e):
+    selectRecord()
 
 def update():
+
+
     try:
         mydb=mysql.connector.connect(
             host= "127.0.0.1",
@@ -74,17 +173,22 @@ def update():
             database='student_mgmt',
             autocommit=True)
         mycursor= mydb.cursor()
-        messagebox.showinfo(title='Success', message='Connected to One Piece DB successfully')
+        print('Connected to Student Mgmt DB successfully')
     except:
         messagebox.showerror(title='Error', message='Cannot connect to DB, examine MySQL connection')
+    
+    sID = [student_ID_Entry.get()]
+    updateQuery= """update student_card where student_id = %s"""
+    mycursor.execute(update, sID)
+    messagebox.showinfo(title='Success', message='Student record updated')
+    
+    
 
 
 
 #-------------------widget section for labels------------------------
 header = Label(root, text='Student Management Portal', font=('Arial', 24, BOLD), background='white')
-header.place(x=550, y=0)
-
-#'first_name', 'last_name', 'birthdate', 'phone', 'email', 'street_addr', 'city', 'state', 'country', 'begin_year', 'expected_grad_yr', 'major'
+header.place(x=300, y=0)
 
 studentID = Label(root, text='Student ID *', font=('Arial', 16, BOLD), background='White')
 studentID.place(x=0, y=70)
@@ -107,45 +211,75 @@ emailLabel.place(x=0, y=370)
 addrLabel = Label(root, text='Street addr', font=('Arial', 16, BOLD), background='White')
 addrLabel.place(x=0, y=430)
 
+cityLabel = Label(root, text='City', font=('Arial', 16, BOLD), background='White')
+cityLabel.place(x=520, y=130)
 
-#-------------------widget section for entry boxes------------------------
-student_ID_Entry = Entry(root, font=('Arial', 16), width=85, bd=5)
-student_ID_Entry.place(x=220, y=70)
+stateLabel = Label(root, text='State', font=('Arial', 16, BOLD), background='White')
+stateLabel.place(x=520, y=190)
 
-firstnameEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
-firstnameEntry.place(x=220, y=130)
+zipcodeLabel = Label(root, text='Zipcode', font=('Arial', 16, BOLD), background='White')
+zipcodeLabel.place(x=520, y=250)
 
-lastnameEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
-lastnameEntry.place(x=220, y=190)
+beginYrLabel = Label(root, text='Start Year', font=('Arial', 16, BOLD), background='White')
+beginYrLabel.place(x=520, y=310)
 
-birthdate_entry = Entry(root, font=('Arial', 16), width=85, bd=5)
-birthdate_entry.place(x=220, y=250)
+expGradYrLabel = Label(root, text='Exp Grad Year', font=('Arial', 16, BOLD), background='White')
+expGradYrLabel.place(x=520, y=370)
 
-phoneEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
-phoneEntry.place(x=220, y=310)
+majorLabel = Label(root, text='Major', font=('Arial', 16, BOLD), background='White')
+majorLabel.place(x=520, y=430)
 
-emailEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
-emailEntry.place(x=220, y=370)
 
-addrEntry = Entry(root, font=('Arial', 16), width=85, bd=5)
-addrEntry.place(x=220, y=430)
+#-------------------widget section for entry boxes-----------------------
+student_ID_Entry = Entry(root, font=('Arial', 16), width=5, bd=5)
+student_ID_Entry.place(x=140, y=70)
 
+firstnameEntry = Entry(root, font=('Arial', 16), width=25, bd=5)
+firstnameEntry.place(x=140, y=130)
+
+lastnameEntry = Entry(root, font=('Arial', 16), width=25, bd=5)
+lastnameEntry.place(x=140, y=190)
+
+birthdate_entry = Entry(root, font=('Arial', 16), width=25, bd=5)
+birthdate_entry.place(x=140, y=250)
+
+phoneEntry = Entry(root, font=('Arial', 16), width=25, bd=5)
+phoneEntry.place(x=140, y=310)
+
+emailEntry = Entry(root, font=('Arial', 16), width=25, bd=5)
+emailEntry.place(x=140, y=370)
+
+addrEntry = Entry(root, font=('Arial', 16), width=25, bd=5)
+addrEntry.place(x=140, y=430)
+
+cityEntry = Entry(root, font=('Arial', 16), width=25, bd=5)
+cityEntry.place(x=590, y=130)
+
+stateEntry = Entry(root, font=('Arial', 16), width=3, bd=5)
+stateEntry.place(x=590, y=190)
+
+zipcodeEntry = Entry(root, font=('Arial', 16), width=5, bd=5)
+zipcodeEntry.place(x=620, y=250)
+
+beginYrEntry = Entry(root, font=('Arial', 16), width=5, bd=5)
+beginYrEntry.place(x=640, y=310)
+
+expGradYrEntry = Entry(root, font=('Arial', 16), width=5, bd=5)
+expGradYrEntry.place(x=680, y=370)
+
+majorEntry = Entry(root, font=('Arial', 16), width=20, bd=5)
+majorEntry.place(x=600, y=430)
 
 #-------------------widget section for buttons------------------------
-displayBtn = Button(root, text='Display All', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
-displayBtn.place(x=10, y=500)
+addBtn = Button(root, text='Add Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=add)
+addBtn.place(x=40, y=500)
 
-addBtn = Button(root, text='Add Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20, command=add)
-addBtn.place(x=190, y=500)
+deleteBtn = Button(root, text='Delete Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=deleteRecord)
+deleteBtn.place(x=220, y=500)
 
-deleteBtn = Button(root, text='Delete Student', font=('Arial', 16, BOLD), background='#ed2630', activebackground='#ed2630', padx=20)
-deleteBtn.place(x=390, y=500)
+updateBtn = Button(root, text='Update Record', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10)
+updateBtn.place(x=420, y=500)
 
-updateBtn = Button(root, text='Update Record', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
-updateBtn.place(x=610, y=500)
-
-searchBtn = Button(root, text='Search', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=20)
-searchBtn.place(x=830, y=500)
 
 
 tree = Treeview(root)
@@ -219,6 +353,8 @@ tree.configure(yscrollcommand=vsb.set)
 vsb.pack(fill=Y, side=RIGHT)
 
 tree.pack(side=BOTTOM)
+
+tree.bind('<Double-1>', clicker)
 
 
 root.mainloop()
