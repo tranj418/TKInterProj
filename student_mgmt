@@ -292,10 +292,11 @@ addBtn.place(x=40, y=500)
 deleteBtn = Button(root, text='Delete Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=deleteRecord)
 deleteBtn.place(x=220, y=500)
 
-updateBtn = Button(root, text='Update Record', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=updateRecord)
+updateBtn = Button(root, text='Update Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=updateRecord)
 updateBtn.place(x=420, y=500)
 
-
+clearBtn = Button(root, text='Clear Record', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=clearRecord)
+clearBtn.place(x=630, y=500)
 
 tree = Treeview(root)
 tree['show']='headings'
