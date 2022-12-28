@@ -3,6 +3,8 @@ from tkinter import messagebox
 import re
 from tkinter.font import BOLD
 import mysql.connector
+import string
+import secrets
 #Do NOT delete the python file - regForm - as it is being called on for the login form
 
 #------------------ Window setup -------------------
@@ -24,7 +26,7 @@ def submit():
     elif len(password) < 8 or len(password_confirm) < 8:
         messagebox.showerror(title='Error', message='Passwords must be 8 chars minimum.')
     elif regex.search(password) == None or regex.search(password_confirm) == None:
-        messagebox.showerror(title='Error', message='Minimum of one special character required for password - !@#$%&.')
+        messagebox.showerror(title='Error', message='Minimum of one special character required for password')
     elif password != password_confirm:
         messagebox.showerror(title='Error', message='Passwords do NOT match.')
     else:
@@ -48,6 +50,24 @@ def submit():
         userEntry.delete(0, END)
         pwEntry.delete(0, END)
         newPWEntry.delete(0, END)
+
+def genPW():
+    
+    pwd = ''
+    pwdLen = 8
+
+    letters = string.ascii_letters
+    #digits = string.digits
+    special_chars = string.punctuation
+    alphabet = letters + special_chars
+
+    for x in range(pwdLen):
+        pwd += ''.join(secrets.choice(alphabet))
+
+    messagebox.showinfo(title='Success', message=f'New password generated!\n {pwd}')
+
+    pwEntry.insert(0, pwd)
+    newPWEntry.insert(0, pwd)
 
 def login():
     root.destroy()
@@ -125,6 +145,17 @@ loginBtn = Button(frame,
                     background='#0630bd',
                     command=login)
 loginBtn.place(x=110, y=310)
+
+newpwBtn = Button(frame, 
+                    text='New Password',
+                    width=15,
+                    font=('Microsoft Yahei UI Light', 10),
+                    foreground='white',
+                    activeforeground='white',
+                    activebackground='#0630bd',
+                    background='#0630bd',
+                    command=genPW)
+newpwBtn.place(x=110, y=360)
 
 
 root.mainloop()
