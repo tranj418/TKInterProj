@@ -212,8 +212,8 @@ def updateRecord():
 header = Label(root, text='Student Management Portal', font=('Arial', 24, BOLD), background='#6A0032', foreground='#d3de07')
 header.place(x=300, y=0)
 
-studentID = Label(root, text='Student ID - DO NOT ALTER', font=('Arial', 16, BOLD), background='#6A0032', foreground='#d3de07')
-studentID.place(x=0, y=70)
+#studentID = Label(root, text='Student ID - DO NOT ALTER', font=('Arial', 16, BOLD), background='#6A0032', foreground='#d3de07')
+#studentID.place(x=0, y=70)
 
 firstName = Label(root, text='First Name', font=('Arial', 16, BOLD), background='#6A0032', foreground='#d3de07')
 firstName.place(x=0, y=130)
@@ -254,7 +254,8 @@ majorLabel.place(x=520, y=430)
 
 #-------------------widget section for entry boxes-----------------------
 student_ID_Entry = Entry(root, font=('Arial', 16), width=5, bd=5)
-student_ID_Entry.place(x=290, y=70)
+#student_ID_Entry.place(x=290, y=70)
+student_ID_Entry.pack_forget()
 
 firstnameEntry = Entry(root, font=('Arial', 16), width=25, bd=5)
 firstnameEntry.place(x=140, y=130)
