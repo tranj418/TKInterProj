@@ -10,7 +10,7 @@ import mysql.connector
 
 root = Tk()
 root.geometry('1000x800') #width x height
-root.config(background='White')
+root.config(background='#610208')
 
 mydb=mysql.connector.connect(
             host= "127.0.0.1",
@@ -202,46 +202,46 @@ def updateRecord():
 
 
 #-------------------widget section for labels------------------------
-header = Label(root, text='Student Management Portal', font=('Arial', 24, BOLD), background='white')
+header = Label(root, text='Student Management Portal', font=('Arial', 24, BOLD), background='#610208', foreground='#d3de07')
 header.place(x=300, y=0)
 
-studentID = Label(root, text='Student ID - DO NOT ALTER', font=('Arial', 16, BOLD), background='White')
+studentID = Label(root, text='Student ID - DO NOT ALTER', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 studentID.place(x=0, y=70)
 
-firstName = Label(root, text='First Name', font=('Arial', 16, BOLD), background='White')
+firstName = Label(root, text='First Name', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 firstName.place(x=0, y=130)
 
-lastName = Label(root, text='Last Name', font=('Arial', 16, BOLD), background='White')
+lastName = Label(root, text='Last Name', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 lastName.place(x=0, y=190)
 
-birthdayLabel = Label(root, text='Birthday', font=('Arial', 16, BOLD), background='White')
+birthdayLabel = Label(root, text='Birthday', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 birthdayLabel.place(x=0, y=250)
 
-phoneLabel = Label(root, text='Phone', font=('Arial', 16, BOLD), background='White')
+phoneLabel = Label(root, text='Phone', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 phoneLabel.place(x=0, y=310)
 
-emailLabel = Label(root, text='Email', font=('Arial', 16, BOLD), background='White')
+emailLabel = Label(root, text='Email', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 emailLabel.place(x=0, y=370)
 
-addrLabel = Label(root, text='Street addr', font=('Arial', 16, BOLD), background='White')
+addrLabel = Label(root, text='Street addr', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 addrLabel.place(x=0, y=430)
 
-cityLabel = Label(root, text='City', font=('Arial', 16, BOLD), background='White')
+cityLabel = Label(root, text='City', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 cityLabel.place(x=520, y=130)
 
-stateLabel = Label(root, text='State', font=('Arial', 16, BOLD), background='White')
+stateLabel = Label(root, text='State', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 stateLabel.place(x=520, y=190)
 
-zipcodeLabel = Label(root, text='Zipcode', font=('Arial', 16, BOLD), background='White')
+zipcodeLabel = Label(root, text='Zipcode', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 zipcodeLabel.place(x=520, y=250)
 
-beginYrLabel = Label(root, text='Start Year', font=('Arial', 16, BOLD), background='White')
+beginYrLabel = Label(root, text='Start Year', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 beginYrLabel.place(x=520, y=310)
 
-expGradYrLabel = Label(root, text='Exp Grad Year', font=('Arial', 16, BOLD), background='White')
+expGradYrLabel = Label(root, text='Exp Grad Year', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 expGradYrLabel.place(x=520, y=370)
 
-majorLabel = Label(root, text='Major', font=('Arial', 16, BOLD), background='White')
+majorLabel = Label(root, text='Major', font=('Arial', 16, BOLD), background='#610208', foreground='#d3de07')
 majorLabel.place(x=520, y=430)
 
 
@@ -286,16 +286,16 @@ majorEntry = Entry(root, font=('Arial', 16), width=20, bd=5)
 majorEntry.place(x=600, y=430)
 
 #-------------------widget section for buttons------------------------
-addBtn = Button(root, text='Add Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=add)
+addBtn = Button(root, text='Add Student', font=('Arial', 16, BOLD), background='#d3de07', activebackground='#d3de07', padx=10, command=add)
 addBtn.place(x=40, y=500)
 
-deleteBtn = Button(root, text='Delete Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=deleteRecord)
+deleteBtn = Button(root, text='Delete Student', font=('Arial', 16, BOLD), background='#d3de07', activebackground='#d3de07', padx=10, command=deleteRecord)
 deleteBtn.place(x=220, y=500)
 
-updateBtn = Button(root, text='Update Student', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=updateRecord)
+updateBtn = Button(root, text='Update Student', font=('Arial', 16, BOLD), background='#d3de07', activebackground='#d3de07', padx=10, command=updateRecord)
 updateBtn.place(x=420, y=500)
 
-clearBtn = Button(root, text='Clear Record', font=('Arial', 16, BOLD), background='#149cf7', activebackground='#149cf7', padx=10, command=clearRecord)
+clearBtn = Button(root, text='Clear Record', font=('Arial', 16, BOLD), background='#d3de07', activebackground='#d3de07', padx=10, command=clearRecord)
 clearBtn.place(x=630, y=500)
 
 tree = Treeview(root)
